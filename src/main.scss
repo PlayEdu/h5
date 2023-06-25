@@ -1,14 +1,16 @@
+@import "./assets/iconfont/iconfont.css";
+
 body {
   margin: 0;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
 :root {
-  --adm-color-primary: #FF4D4F;
+  --adm-color-primary: #ff4d4f !important;
   --adm-color-success: #00b578;
   --adm-color-warning: #ff8f1f;
   --adm-color-danger: #ff3141;
@@ -24,7 +26,25 @@ code {
 
   --adm-font-size-main: var(--adm-font-size-5);
 
-  --adm-font-family: -apple-system, blinkmacsystemfont, 'Helvetica Neue',
-  helvetica, segoe ui, arial, roboto, 'PingFang SC', 'miui',
-  'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
+  --adm-font-family: -apple-system, blinkmacsystemfont, "Helvetica Neue",
+    helvetica, segoe ui, arial, roboto, "PingFang SC", "miui",
+    "Hiragino Sans GB", "Microsoft Yahei", sans-serif;
+}
+
+.adm-badge-wrapper {
+  height: 30px;
+}
+
+.adm-tab-bar-item-title {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 11px;
+  margin-top: 4px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.adm-tab-bar-item-active {
+  .adm-tab-bar-item-title {
+    color: #ff4d4f !important;
+  }
 }
