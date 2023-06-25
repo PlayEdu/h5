@@ -6,6 +6,7 @@ import { getToken } from "../utils";
 import { InitPage } from "../pages/init";
 import IndexPage from "../pages/index/index";
 import LoginPage from "../pages/login";
+import MemberPage from "../pages/member/index";
 import PrivateRoute from "../components/private-route";
 
 let RootPage: any = null;
@@ -36,11 +37,15 @@ const routes: RouteObject[] = [
     children: [
       {
         path: "/",
-        element: <IndexPage />,
+        element: <PrivateRoute Component={<IndexPage />} />,
       },
       {
         path: "/login",
         element: <LoginPage />,
+      },
+      {
+        path: "/member",
+        element: <PrivateRoute Component={<MemberPage />} />,
       },
     ],
   },

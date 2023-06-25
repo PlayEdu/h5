@@ -41,7 +41,6 @@ export class HttpClient {
           return Promise.resolve(response);
         } else {
           Toast.show({
-            icon: "fail",
             content: msg,
           });
         }
@@ -52,7 +51,6 @@ export class HttpClient {
         let status = error.response.status;
         if (status === 401) {
           Toast.show({
-            icon: "fail",
             content: "请重新登录",
           });
           GoLogin();

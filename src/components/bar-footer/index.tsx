@@ -21,7 +21,7 @@ export const TabBarFooter: React.FC = () => {
         ) : (
           <i
             style={{ fontSize: 30, color: "#cccccc" }}
-            className="iconfont icon-waterprint"
+            className="iconfont icon-icon-shouye"
           ></i>
         ),
     },
