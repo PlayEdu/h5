@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Button, Toast, SpinLoading, Input, Image } from "antd-mobile";
+import { Button, Toast, Mask, Image } from "antd-mobile";
+import { useNavigate } from "react-router-dom";
 import { user as member } from "../../api/index";
 import {
   setDepKey,
@@ -7,19 +8,20 @@ import {
   getDepName,
   studyTimeFormat,
 } from "../../utils/index";
+import { logoutAction } from "../../store/user/loginUserSlice";
 import styles from "./index.module.scss";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { TabBarFooter } from "../../components";
 import moreIcon from "../../assets/images/commen/icon-more.png";
 
 const MemberPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const systemConfig = useSelector((state: any) => state.systemConfig.value);
   const [loading, setLoading] = useState<boolean>(false);
-  const [tabKey, setTabKey] = useState(0);
   const [departmentsMenu, setDepartmentsMenu] = useState<any>([]);
   const [currentDepartment, setCurrentDepartment] = useState<string>("");
-  const [learnCourseRecords, setLearnCourseRecords] = useState<any>({});
-  const [learnCourseHourCount, setLearnCourseHourCount] = useState<any>({});
+  const [visible, setVisible] = useState(false);
   const [stats, setStats] = useState<any>({});
   const user = useSelector((state: any) => state.loginUser.value.user);
   const departments = useSelector(
@@ -60,21 +62,19 @@ const MemberPage = () => {
       return;
     }
     getData();
-  }, [tabKey, currentDepId]);
+  }, [currentDepId, user]);
 
   const getData = () => {
     setLoading(true);
     member.courses(currentDepId, 0).then((res: any) => {
-      const records = res.data.learn_course_records;
       setStats(res.data.stats);
-      setLearnCourseRecords(records);
-      setLearnCourseHourCount(res.data.user_course_hour_count);
-
       setLoading(false);
     });
   };
 
-  const setClick = () => {};
+  const setClick = () => {
+    setVisible(true);
+  };
 
   const getTotal = (num1: number, num2: number) => {
     let value = 0;
@@ -96,7 +96,6 @@ const MemberPage = () => {
             {user && user.name && (
               <>
                 <Image
-                  loading="lazy"
                   style={{
                     width: 100,
                     height: 100,
@@ -230,6 +229,38 @@ const MemberPage = () => {
         </div>
       </div>
       <div className={styles["support-box"]}>「PlayEdu提供技术支持」</div>
+      <Mask
+        visible={visible}
+        onMaskClick={() => {
+          setVisible(false);
+        }}
+      >
+        <div className={styles["dialog-body"]}>
+          <div className={styles["dialog-box"]}>
+            <div className={styles["button-item"]}>切换部门</div>
+            <div className={styles["button-item"]}>更换头像</div>
+            <div
+              className={styles["button-item"]}
+              onClick={() => {
+                setVisible(false);
+                navigate("/change-password");
+              }}
+            >
+              修改密码
+            </div>
+          </div>
+          <div
+            className={styles["dialog-button"]}
+            onClick={() => {
+              setVisible(false);
+              dispatch(logoutAction());
+              window.location.href = "/login";
+            }}
+          >
+            退出登录
+          </div>
+        </div>
+      </Mask>
       <TabBarFooter></TabBarFooter>
     </div>
   );
