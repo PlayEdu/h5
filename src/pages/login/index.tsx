@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Button, Toast, SpinLoading, Input, Image } from "antd-mobile";
 import styles from "./index.module.scss";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login, system, user } from "../../api/index";
 import { setToken } from "../../utils/index";
-import { loginAction, logoutAction } from "../../store/user/loginUserSlice";
+import { loginAction } from "../../store/user/loginUserSlice";
 import banner from "../../assets/images/login/banner.png";
 
 const LoginPage = () => {
@@ -18,9 +18,6 @@ const LoginPage = () => {
   const [captchaVal, setCaptchaVal] = useState<string>("");
   const [captchaKey, setCaptchaKey] = useState<string>("");
   const [captchaLoading, setCaptchaLoading] = useState(true);
-  const loginState = useSelector((state: any) => {
-    return state.loginUser.value;
-  });
 
   useEffect(() => {
     fetchImageCaptcha();
@@ -59,9 +56,6 @@ const LoginPage = () => {
       Toast.show({
         content: "图形验证码错误",
       });
-      return;
-    }
-    if (loading) {
       return;
     }
     handleSubmit();
