@@ -82,3 +82,32 @@ code {
 .adm-progress-bar-text {
   color: #ff4d4f !important;
 }
+
+.adm-tabs-header {
+  border-bottom: none !important;
+}
+
+.adm-tabs-tab {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.adm-tabs-tab-active {
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.adm-dropdown-item {
+  justify-content: left !important;
+  .adm-dropdown-item-title {
+    padding: 8px 0px !important;
+    .adm-dropdown-item-title-text {
+      font-size: 14px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.45);
+    }
+  }
+}
+
+.adm-popup-body {
+  border-radius: 0px 0px 16px 16px;
+}

@@ -1,12 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  Button,
-  Toast,
-  Input,
-  Image,
-  ProgressBar,
-  SpinLoading,
-} from "antd-mobile";
+import { Image, ProgressBar, SpinLoading } from "antd-mobile";
 import styles from "./index.module.scss";
 import { useNavigate } from "react-router-dom";
 import { course } from "../../api/index";
