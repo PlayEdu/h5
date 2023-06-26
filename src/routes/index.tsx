@@ -8,6 +8,7 @@ import IndexPage from "../pages/index/index";
 import LoginPage from "../pages/login";
 import MemberPage from "../pages/member/index";
 import ChangePasswordPage from "../pages/change-password/index";
+import StudyPage from "../pages/study/index";
 import PrivateRoute from "../components/private-route";
 
 let RootPage: any = null;
@@ -51,6 +52,10 @@ const routes: RouteObject[] = [
       {
         path: "/change-password",
         element: <PrivateRoute Component={<ChangePasswordPage />} />,
+      },
+      {
+        path: "/study",
+        element: <PrivateRoute Component={<StudyPage />} />,
       },
     ],
   },

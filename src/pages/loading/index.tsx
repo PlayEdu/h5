@@ -1,10 +1,10 @@
-import { DotLoading } from 'antd-mobile'
+import { SpinLoading } from "antd-mobile";
 
 const LoadingPage = () => {
   return (
-    <>
-      <DotLoading color='primary' />
-    </>
+    <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+      <SpinLoading color="primary" />
+    </div>
   );
 };
 
