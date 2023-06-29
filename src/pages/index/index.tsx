@@ -9,7 +9,6 @@ import { CoursesModel } from "./compenents/courses-model";
 
 const IndexPage = () => {
   const ref = useRef<DropdownRef>(null);
-  const systemConfig = useSelector((state: any) => state.systemConfig.value);
   const [loading, setLoading] = useState<boolean>(false);
   const [tabKey, setTabKey] = useState("0");
   const [coursesList, setCoursesList] = useState<any>([]);
@@ -18,6 +17,7 @@ const IndexPage = () => {
   const [categoryText, setCategoryText] = useState<string>("所有分类");
   const [learnCourseRecords, setLearnCourseRecords] = useState<any>({});
   const [learnCourseHourCount, setLearnCourseHourCount] = useState<any>({});
+  const systemConfig = useSelector((state: any) => state.systemConfig.value);
   const currentDepId = useSelector(
     (state: any) => state.loginUser.value.currentDepId
   );
