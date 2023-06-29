@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import backIcon from "../../assets/images/commen/icon-back-n.png";
 import { course as Course } from "../../api/index";
 import { Empty } from "../../components";
+import { HourCompenent } from "./compenents/hour";
 
 const CoursePage = () => {
   const params = useParams();
@@ -75,7 +76,7 @@ const CoursePage = () => {
                   style={{
                     "--size": "80px",
                     "--fill-color": "#FFFFFF",
-                    "--track-color": "#F6F6F6",
+                    "--track-color": "#ffffff4D",
                     "--track-width": "7px",
                   }}
                 >
@@ -89,7 +90,7 @@ const CoursePage = () => {
                   style={{
                     "--size": "80px",
                     "--fill-color": "#FFFFFF",
-                    "--track-color": "#F6F6F6",
+                    "--track-color": "#ffffff4D",
                     "--track-width": "7px",
                   }}
                 >
@@ -103,7 +104,7 @@ const CoursePage = () => {
                   style={{
                     "--size": "80px",
                     "--fill-color": "#FFFFFF",
-                    "--track-color": "#F6F6F6",
+                    "--track-color": "#ffffff4D",
                     "--track-width": "7px",
                   }}
                 >
@@ -113,6 +114,85 @@ const CoursePage = () => {
                 </ProgressCircle>
               )}
           </div>
+        </div>
+      </div>
+      <div className={styles["other-content"]}>
+        {course.short_desc && (
+          <>
+            <div className={styles["desc"]}>{course.short_desc}</div>
+            <div className={styles["line"]}></div>
+          </>
+        )}
+        <div className={styles["chapters-hours-cont"]}>
+          {chapters.length === 0 && JSON.stringify(hours) === "{}" && <Empty />}{" "}
+          {chapters.length === 0 && JSON.stringify(hours) !== "{}" && (
+            <div className={styles["hours-list-box"]}>
+              {hours[0].map((item: any, index: number) => (
+                <div key={item.id} className={styles["hours-it"]}>
+                  {learnHourRecord[item.id] && (
+                    <HourCompenent
+                      id={item.id}
+                      cid={item.course_id}
+                      title={item.title}
+                      record={learnHourRecord[item.id]}
+                      duration={item.duration}
+                      progress={
+                        (learnHourRecord[item.id].finished_duration * 100) /
+                        learnHourRecord[item.id].total_duration
+                      }
+                    ></HourCompenent>
+                  )}
+                  {!learnHourRecord[item.id] && (
+                    <HourCompenent
+                      id={item.id}
+                      cid={item.course_id}
+                      title={item.title}
+                      record={null}
+                      duration={item.duration}
+                      progress={0}
+                    ></HourCompenent>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+          {chapters.length > 0 && JSON.stringify(hours) !== "{}" && (
+            <div className={styles["hours-list-box"]}>
+              {chapters.map((item: any, index: number) => (
+                <div key={item.id} className={styles["chapter-it"]}>
+                  <div className={styles["chapter-name"]}>{item.name}</div>
+                  {hours[item.id] &&
+                    hours[item.id].map((it: any, int: number) => (
+                      <div key={it.id} className={styles["hours-it"]}>
+                        {learnHourRecord[it.id] && (
+                          <HourCompenent
+                            id={it.id}
+                            cid={item.course_id}
+                            title={it.title}
+                            record={learnHourRecord[it.id]}
+                            duration={it.duration}
+                            progress={
+                              (learnHourRecord[it.id].finished_duration * 100) /
+                              learnHourRecord[it.id].total_duration
+                            }
+                          ></HourCompenent>
+                        )}
+                        {!learnHourRecord[it.id] && (
+                          <HourCompenent
+                            id={it.id}
+                            cid={item.course_id}
+                            title={it.title}
+                            record={null}
+                            duration={it.duration}
+                            progress={0}
+                          ></HourCompenent>
+                        )}
+                      </div>
+                    ))}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

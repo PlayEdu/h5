@@ -60,3 +60,12 @@ export function studyTimeFormat(dateStr: number) {
   value.push(d.seconds());
   return value;
 }
+
+export function durationFormat(dateStr: number) {
+  var d = moment.duration(dateStr, "seconds");
+  let hour = d.hours() === 0 ? "" : d.hours() + ":";
+  let minute = d.minutes() >= 10 ? d.minutes() + ":" : "0" + d.minutes() + ":";
+  let second = d.seconds() >= 10 ? d.seconds() : "0" + d.seconds();
+
+  return hour + minute + second;
+}
