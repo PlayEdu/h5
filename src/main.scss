@@ -111,3 +111,16 @@ code {
 .adm-popup-body {
   border-radius: 0px 0px 16px 16px;
 }
+
+.adm-image-uploader {
+  --gap: none !important;
+}
+
+.adm-space-item {
+  width: 100%;
+  padding-bottom: 0 !important;
+  margin-right: 0 !important;
+  .adm-image-uploader-cell {
+    display: none;
+  }
+}

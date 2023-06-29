@@ -1,14 +1,10 @@
 import { useEffect, useState } from "react";
-import { Button, Toast, Mask, Image } from "antd-mobile";
+import { ImageUploader, Toast, Mask, Image } from "antd-mobile";
 import { useNavigate } from "react-router-dom";
 import { user as member } from "../../api/index";
-import {
-  setDepKey,
-  setDepName,
-  getDepName,
-  studyTimeFormat,
-} from "../../utils/index";
-import { logoutAction } from "../../store/user/loginUserSlice";
+import { getDepName, studyTimeFormat } from "../../utils/index";
+import { loginAction, logoutAction } from "../../store/user/loginUserSlice";
+import { ImageUploadItem } from "antd-mobile/es/components/image-uploader";
 import styles from "./index.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { TabBarFooter } from "../../components";
@@ -17,12 +13,15 @@ import moreIcon from "../../assets/images/commen/icon-more.png";
 const MemberPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const systemConfig = useSelector((state: any) => state.systemConfig.value);
   const [loading, setLoading] = useState<boolean>(false);
-  const [departmentsMenu, setDepartmentsMenu] = useState<any>([]);
   const [currentDepartment, setCurrentDepartment] = useState<string>("");
   const [visible, setVisible] = useState(false);
   const [stats, setStats] = useState<any>({});
+  const [fileList, setFileList] = useState<ImageUploadItem[]>([
+    {
+      url: "",
+    },
+  ]);
   const user = useSelector((state: any) => state.loginUser.value.user);
   const departments = useSelector(
     (state: any) => state.loginUser.value.departments
@@ -38,22 +37,6 @@ const MemberPage = () => {
   useEffect(() => {
     if (departments.length > 0) {
       setCurrentDepartment(getDepName() || departments[0].name);
-      const arr: any = [
-        {
-          key: "1",
-          type: "group",
-          label: "部门",
-          children: [],
-        },
-      ];
-      departments.map((item: any) => {
-        arr[0].children.push({
-          key: item.id,
-          label: item.name,
-          disabled: item.name === currentDepartment,
-        });
-      });
-      setDepartmentsMenu(arr);
     }
   }, [departments]);
 
@@ -88,6 +71,48 @@ const MemberPage = () => {
     return value;
   };
 
+  const beforeUpload = (file: File) => {
+    if (file.size > 2 * 1024 * 1024) {
+      Toast.show("超过2M限制，不允许上传");
+      return null;
+    }
+    return file;
+  };
+
+  const propsUpload = async (file: File) => {
+    console.log(file);
+    member.avatar(file).then((res: any) => {
+      Toast.show("头像更换成功");
+      getData();
+    });
+  };
+
+  const mockUpload = async (file: File) => {
+    setVisible(false);
+    const data = new FormData();
+    data.append("file", file);
+    try {
+      let res = await member.avatar(data);
+      if (res) {
+        Toast.show("头像更换成功");
+        getUser();
+      }
+    } catch (e) {
+      console.error("上传失败", e);
+    }
+    return {
+      url: URL.createObjectURL(file),
+    };
+  };
+
+  const getUser = () => {
+    member.detail().then((res: any) => {
+      const data = res.data;
+      dispatch(loginAction(data));
+      setFileList([]);
+    });
+  };
+
   return (
     <div className={styles["main-body"]}>
       <div className={styles["content-box"]}>
@@ -96,12 +121,13 @@ const MemberPage = () => {
             {user && user.name && (
               <>
                 <Image
+                  width={100}
+                  height={100}
                   style={{
-                    width: 100,
-                    height: 100,
                     borderRadius: "50%",
                     marginRight: 20,
                   }}
+                  fit="cover"
                   src={user.avatar}
                 />
                 <div className={styles["other-cont"]}>
@@ -237,8 +263,31 @@ const MemberPage = () => {
       >
         <div className={styles["dialog-body"]}>
           <div className={styles["dialog-box"]}>
-            <div className={styles["button-item"]}>切换部门</div>
-            <div className={styles["button-item"]}>更换头像</div>
+            <div
+              className={styles["button-item"]}
+              onClick={() => {
+                setVisible(false);
+                if (departments.length === 1) {
+                  Toast.show({
+                    content: "暂无可切换部门",
+                  });
+                  return;
+                }
+                navigate("/change-department");
+              }}
+            >
+              切换部门
+            </div>
+            <ImageUploader
+              value={fileList}
+              onChange={setFileList}
+              upload={mockUpload}
+              preview={false}
+              showFailed={false}
+              beforeUpload={beforeUpload}
+            >
+              <div className={styles["button-item"]}>更换头像</div>
+            </ImageUploader>
             <div
               className={styles["button-item"]}
               onClick={() => {

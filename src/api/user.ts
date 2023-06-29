@@ -24,8 +24,6 @@ export function courses(depId: number, categoryId: number) {
 }
 
 // 修改头像
-export function avatar(file: any) {
-  return client.put("/api/v1/user/avatar", {
-    file: file,
-  });
+export function avatar(params: any) {
+  return client.put("/api/v1/user/avatar", params);
 }
