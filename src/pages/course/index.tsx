@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Image, ProgressBar, SpinLoading } from "antd-mobile";
+import { Image, ProgressCircle, SpinLoading } from "antd-mobile";
 import styles from "./index.module.scss";
 import { useNavigate, useParams } from "react-router-dom";
 import backIcon from "../../assets/images/commen/icon-back-n.png";
@@ -50,7 +50,71 @@ const CoursePage = () => {
           onClick={() => navigate(-1)}
         />
       </div>
-      <div className={styles["top-content"]}></div>
+      <div className={styles["top-content"]}>
+        <div className={styles["title"]}>{course.title}</div>
+        <div className={styles["info-content"]}>
+          <div className={styles["info"]}>
+            <div className={styles["record"]}>
+              已学完课时
+              <strong>
+                {learnRecord ? learnRecord.finished_count : 0}
+              </strong> / {course.class_hour}
+            </div>
+            {course.is_required === 1 && (
+              <div className={styles["type"]}>必修课</div>
+            )}
+            {course.is_required === 0 && (
+              <div className={styles["type"]}>选修课</div>
+            )}
+          </div>
+          <div className={styles["progress-box"]}>
+            {JSON.stringify(learnRecord) === "{}" &&
+              JSON.stringify(learnHourRecord) === "{}" && (
+                <ProgressCircle
+                  percent={0}
+                  style={{
+                    "--size": "80px",
+                    "--fill-color": "#FFFFFF",
+                    "--track-color": "#F6F6F6",
+                    "--track-width": "7px",
+                  }}
+                >
+                  <span className={styles.num}>0%</span>
+                </ProgressCircle>
+              )}
+            {JSON.stringify(learnRecord) === "{}" &&
+              JSON.stringify(learnHourRecord) !== "{}" && (
+                <ProgressCircle
+                  percent={1}
+                  style={{
+                    "--size": "80px",
+                    "--fill-color": "#FFFFFF",
+                    "--track-color": "#F6F6F6",
+                    "--track-width": "7px",
+                  }}
+                >
+                  <span className={styles.num}>1%</span>
+                </ProgressCircle>
+              )}
+            {JSON.stringify(learnRecord) !== "{}" &&
+              JSON.stringify(learnHourRecord) !== "{}" && (
+                <ProgressCircle
+                  percent={Math.floor(learnRecord.progress / 100)}
+                  style={{
+                    "--size": "80px",
+                    "--fill-color": "#FFFFFF",
+                    "--track-color": "#F6F6F6",
+                    "--track-width": "7px",
+                  }}
+                >
+                  <span className={styles.num}>
+                    {Math.floor(learnRecord.progress / 100)}%
+                  </span>
+                </ProgressCircle>
+              )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
