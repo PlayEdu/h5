@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Radio, Image } from "antd-mobile";
 import styles from "./index.module.scss";
 import { useNavigate } from "react-router-dom";
@@ -17,6 +17,10 @@ const ChangeDepartmentPage = () => {
   const currentDepId = useSelector(
     (state: any) => state.loginUser.value.currentDepId
   );
+
+  useEffect(() => {
+    document.title = "切换部门";
+  }, []);
 
   const onDepClick = (value: any) => {
     let it = departments.find((o: any) => o.id === value);

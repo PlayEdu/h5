@@ -10,6 +10,7 @@ import MemberPage from "../pages/member/index";
 import ChangePasswordPage from "../pages/change-password/index";
 import ChangeDepartmentPage from "../pages/change-department/index";
 import StudyPage from "../pages/study/index";
+import CoursePage from "../pages/course/index";
 import PrivateRoute from "../components/private-route";
 
 let RootPage: any = null;
@@ -61,6 +62,10 @@ const routes: RouteObject[] = [
       {
         path: "/change-department",
         element: <PrivateRoute Component={<ChangeDepartmentPage />} />,
+      },
+      {
+        path: "/course/:courseId",
+        element: <PrivateRoute Component={<CoursePage />} />,
       },
     ],
   },
