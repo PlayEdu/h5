@@ -17,7 +17,6 @@ const ChangeDepartmentPage = () => {
   const currentDepId = useSelector(
     (state: any) => state.loginUser.value.currentDepId
   );
-  console.log(currentDepId);
 
   const onDepClick = (value: any) => {
     let it = departments.find((o: any) => o.id === value);
