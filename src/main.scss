@@ -124,3 +124,14 @@ code {
     display: none;
   }
 }
+
+.adm-radio-content {
+  font-size: 16px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.88);
+  line-height: 16px;
+  padding-left: 15px !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -8,6 +8,7 @@ import IndexPage from "../pages/index/index";
 import LoginPage from "../pages/login";
 import MemberPage from "../pages/member/index";
 import ChangePasswordPage from "../pages/change-password/index";
+import ChangeDepartmentPage from "../pages/change-department/index";
 import StudyPage from "../pages/study/index";
 import PrivateRoute from "../components/private-route";
 
@@ -56,6 +57,10 @@ const routes: RouteObject[] = [
       {
         path: "/study",
         element: <PrivateRoute Component={<StudyPage />} />,
+      },
+      {
+        path: "/change-department",
+        element: <PrivateRoute Component={<ChangeDepartmentPage />} />,
       },
     ],
   },
