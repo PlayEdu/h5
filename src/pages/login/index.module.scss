@@ -58,7 +58,7 @@
       align-items: center;
       margin-top: 20px;
       .input-item {
-        width: 200px;
+        flex: 1;
         height: 54px;
         background: #ffffff;
         border-radius: 8px;
@@ -74,6 +74,7 @@
         height: 54px;
         border-radius: 4px;
         overflow: hidden;
+        margin-left: 10px;
         .catpcha-loading-box {
           width: 125px;
           height: 54px;

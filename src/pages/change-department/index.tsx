@@ -28,7 +28,7 @@ const ChangeDepartmentPage = () => {
       dispatch(saveCurrentDepId(Number(value)));
       setDepKey(value);
       setDepName(it.name);
-      navigate("/", { replace: true });
+      navigate("/member", { replace: true });
     }
   };
 
