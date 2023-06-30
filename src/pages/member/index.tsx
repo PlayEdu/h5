@@ -113,6 +113,7 @@ const MemberPage = () => {
             {user && user.name && (
               <>
                 <Image
+                  loading="lazy"
                   width={100}
                   height={100}
                   style={{
