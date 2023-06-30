@@ -71,21 +71,13 @@ const MemberPage = () => {
     return value;
   };
 
-  const beforeUpload = (file: File) => {
-    if (file.size > 2 * 1024 * 1024) {
-      Toast.show("超过2M限制，不允许上传");
-      return null;
-    }
-    return file;
-  };
-
-  const propsUpload = async (file: File) => {
-    console.log(file);
-    member.avatar(file).then((res: any) => {
-      Toast.show("头像更换成功");
-      getData();
-    });
-  };
+  // const beforeUpload = (file: File) => {
+  //   if (file.size > 2 * 1024 * 1024) {
+  //     Toast.show("超过2M限制，不允许上传");
+  //     return null;
+  //   }
+  //   return file;
+  // };
 
   const mockUpload = async (file: File) => {
     setVisible(false);
@@ -294,7 +286,6 @@ const MemberPage = () => {
               upload={mockUpload}
               preview={false}
               showFailed={false}
-              beforeUpload={beforeUpload}
             >
               <div className={styles["button-item"]}>更换头像</div>
             </ImageUploader>
