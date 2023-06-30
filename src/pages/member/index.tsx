@@ -241,17 +241,22 @@ const MemberPage = () => {
               {stats.required_course_count || 0}
             </div>
           </div>
-          {stats.nun_required_course_count > 0 && (
-            <div className={styles["record-item"]}>
-              <div className={styles["name"]}>选修课</div>
+
+          <div className={styles["record-item"]}>
+            <div className={styles["name"]}>选修课</div>
+            {stats.nun_required_course_count > 0 ? (
               <div className={styles["value"]}>
                 <strong>
                   {stats.nun_required_finished_course_count || 0}{" "}
                 </strong>
                 / {stats.nun_required_course_count || 0}
               </div>
-            </div>
-          )}
+            ) : (
+              <div className={styles["value"]}>
+                <strong>0 </strong>/ 0
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <div className={styles["support-box"]}>
