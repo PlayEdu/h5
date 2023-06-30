@@ -32,6 +32,7 @@ const MemberPage = () => {
 
   useEffect(() => {
     document.title = "我的";
+    getUser();
   }, []);
 
   useEffect(() => {
@@ -87,7 +88,7 @@ const MemberPage = () => {
       let res = await member.avatar(data);
       if (res) {
         Toast.show("头像更换成功");
-        getUser();
+        await getUser(); //获取登录用户的信息并写入store
       }
     } catch (e) {
       console.error("上传失败", e);
@@ -97,12 +98,12 @@ const MemberPage = () => {
     };
   };
 
-  const getUser = () => {
-    member.detail().then((res: any) => {
-      const data = res.data;
-      dispatch(loginAction(data));
+  const getUser = async () => {
+    let res: any = await member.detail();
+    if (res) {
+      dispatch(loginAction(res.data));
       setFileList([]);
-    });
+    }
   };
 
   return (
@@ -110,7 +111,7 @@ const MemberPage = () => {
       <div className={styles["content-box"]}>
         <div className={styles["top-content"]}>
           <div className={styles["user-info"]}>
-            {user && user.name && (
+            {user.name && (
               <>
                 <Image
                   width={100}
@@ -250,12 +251,6 @@ const MemberPage = () => {
             )}
           </div>
         </div>
-      </div>
-      <div className={styles["support-box"]}>
-        <i
-          style={{ fontSize: 20, color: "rgba(0, 0, 0, 0.3)" }}
-          className="iconfont icon-playedu"
-        ></i>
       </div>
       <Mask
         visible={visible}

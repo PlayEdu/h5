@@ -191,12 +191,6 @@ const LoginPage = () => {
           </Button>
         </div>
       </div>
-      <div className={styles["support-box"]}>
-        <i
-          style={{ fontSize: 20, color: "rgba(0, 0, 0, 0.3)" }}
-          className="iconfont icon-playedu"
-        ></i>
-      </div>
     </div>
   );
 };

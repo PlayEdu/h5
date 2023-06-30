@@ -61,7 +61,10 @@ export const TabBarFooter: React.FC = () => {
 
   return (
     <div className={styles["footer"]}>
-      <TabBar activeKey={pathname} onChange={(value) => navigate(value)}>
+      <TabBar
+        activeKey={pathname}
+        onChange={(value) => navigate(value, { replace: true })}
+      >
         {tabs.map((item) => (
           <TabBar.Item key={item.key} icon={item.icon} title={item.title} />
         ))}
