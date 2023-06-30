@@ -81,17 +81,12 @@
   z-index: 10;
   .desc {
     width: 100%;
-    max-height: 72px;
+    height: auto;
     font-size: 12px;
     font-weight: 400;
     color: rgba(0, 0, 0, 0.45);
     line-height: 18px;
     text-align: left;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
   }
   .line {
     width: 100%;
