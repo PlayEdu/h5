@@ -61,8 +61,10 @@ const CoursePage = () => {
           <div className={styles["info"]}>
             <div className={styles["record"]}>
               已学完课时{" "}
-              <strong>{learnRecord ? learnRecord.finished_count : 0}</strong> /{" "}
-              {course.class_hour}
+              <strong>
+                {learnRecord ? learnRecord.finished_count || 0 : 0}
+              </strong>{" "}
+              / {course.class_hour}
             </div>
             {course.is_required === 1 && (
               <div className={styles["type"]}>必修课</div>
