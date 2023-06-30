@@ -151,7 +151,12 @@ const LoginPage = () => {
             登 录
           </Button>
         </div>
-        <div className={styles["support-box"]}>「PlayEdu提供技术支持」</div>
+        <div className={styles["support-box"]}>
+          <i
+            style={{ fontSize: 20, color: "rgba(0, 0, 0, 0.3)" }}
+            className="iconfont icon-playedu"
+          ></i>
+        </div>
       </div>
     </div>
   );
