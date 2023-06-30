@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
     <title>PlayEdu</title>
     <script src="/js/DPlayer.min.js"></script>
   </head>
@@ -11,9 +14,36 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     <script
-    crossorigin="anonymous"
-    integrity="sha512-oHrfR/z2wkuRuaHrdZ9NhoT/o/1kteub+QvmQgVzOKK7NTvIKQMvnY9+/RR0+eW311o4lAE/YzzLXXmP2XUvig=="
-    src="https://lib.baomitu.com/hls.js/1.1.4/hls.min.js"
-  ></script>
+      crossorigin="anonymous"
+      integrity="sha512-oHrfR/z2wkuRuaHrdZ9NhoT/o/1kteub+QvmQgVzOKK7NTvIKQMvnY9+/RR0+eW311o4lAE/YzzLXXmP2XUvig=="
+      src="https://lib.baomitu.com/hls.js/1.1.4/hls.min.js"
+    ></script>
+    <script type="text/javascript">
+      if (
+        typeof WeixinJSBridge == "object" &&
+        typeof WeixinJSBridge.invoke == "function"
+      ) {
+        handleFontSize();
+      } else {
+        if (document.addEventListener) {
+          document.addEventListener(
+            "WeixinJSBridgeReady",
+            handleFontSize,
+            false
+          );
+        } else if (document.attachEvent) {
+          document.attachEvent("WeixinJSBridgeReady", handleFontSize);
+          document.attachEvent("onWeixinJSBridgeReady", handleFontSize);
+        }
+      }
+      function handleFontSize() {
+        // 设置网页字体为默认大小
+        WeixinJSBridge.invoke("setFontSizeCallback", { fontSize: 0 });
+        // 重写设置网页字体大小的事件
+        WeixinJSBridge.on("menu:setfont", function () {
+          WeixinJSBridge.invoke("setFontSizeCallback", { fontSize: 0 });
+        });
+      }
+    </script>
   </body>
 </html>
