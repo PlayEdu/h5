@@ -38,8 +38,8 @@
       color: white;
       z-index: 100;
       .alert-button {
-        width: 100px;
-        height: 36px;
+        box-sizing: border-box;
+        padding: 0px 15px;
         background: #ff4d4f;
         border-radius: 4px;
         display: flex;
@@ -49,6 +49,7 @@
         margin-bottom: 0px;
         font-size: 14px;
         font-weight: 500;
+        line-height: 36px;
         color: #ffffff;
       }
     }
