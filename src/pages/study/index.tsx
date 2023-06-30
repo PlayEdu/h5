@@ -87,7 +87,7 @@ const StudyPage = () => {
                             <>
                               <Image width={20} height={20} src={mediaIcon} />
                               <span className={styles["tip"]}>
-                                恭喜你学完此套课程!
+                                恭喜你学完此课程!
                               </span>
                             </>
                           )}

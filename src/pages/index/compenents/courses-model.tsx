@@ -76,7 +76,7 @@ export const CoursesModel: React.FC<PropInterface> = ({
                 src={mediaIcon}
                 style={{ marginRight: 5 }}
               />
-              <span>恭喜你学完此套课程!</span>
+              <span>恭喜你学完此课程!</span>
             </div>
           )}
         </div>
