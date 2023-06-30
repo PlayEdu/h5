@@ -22,10 +22,13 @@ const LoginPage = () => {
   const [captchaVal, setCaptchaVal] = useState<string>("");
   const [captchaKey, setCaptchaKey] = useState<string>("");
   const [captchaLoading, setCaptchaLoading] = useState(true);
+  const [bodyHeight, setBodyHeight] = useState<number>(0);
 
   useEffect(() => {
     fetchImageCaptcha();
     document.title = "登录";
+    let value = document.documentElement.clientHeight;
+    setBodyHeight(value);
   }, []);
 
   const fetchImageCaptcha = () => {
@@ -123,7 +126,10 @@ const LoginPage = () => {
   };
 
   return (
-    <div className={styles["login-content"]}>
+    <div
+      className={styles["login-content"]}
+      style={{ height: bodyHeight + "px" }}
+    >
       <div className={styles["top-content"]}>
         <div className={styles["title"]}>学员登录</div>
         <Image src={banner} width={150} height={150} />
