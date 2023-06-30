@@ -56,7 +56,7 @@ export const HourCompenent: React.FC<PropInterface> = ({
           )}
         </div>
         <div className={styles["title"]}>
-          {title}{" "}({durationFormat(Number(duration))})
+          {title} ({durationFormat(Number(duration))})
         </div>
       </div>
     </>
