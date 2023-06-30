@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Radio, Image } from "antd-mobile";
+import { Radio, Image, Toast } from "antd-mobile";
 import styles from "./index.module.scss";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,6 +28,9 @@ const ChangeDepartmentPage = () => {
       dispatch(saveCurrentDepId(Number(value)));
       setDepKey(value);
       setDepName(it.name);
+      Toast.show({
+        content: "部门切换成功",
+      });
       navigate("/member", { replace: true });
     }
   };
