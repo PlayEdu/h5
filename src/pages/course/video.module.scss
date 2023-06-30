@@ -57,6 +57,7 @@
 
 .chapters-hours-cont {
   width: 100%;
+  float: left;
   height: auto;
   box-sizing: border-box;
   background-color: #ffffff;
@@ -70,9 +71,9 @@
       width: 100%;
       height: auto;
       margin-top: 20px;
-
       .chapter-name {
         width: 100%;
+        float: left;
         height: 15px;
         font-size: 15px;
         font-weight: 500;
@@ -82,12 +83,14 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        margin-bottom: 5px;
       }
     }
     .hours-it {
       width: 100%;
+      float: left;
       height: auto;
-      margin-top: 20px;
+      margin-top: 10px;
     }
   }
 }

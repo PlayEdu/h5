@@ -131,7 +131,7 @@ const CoursePage = () => {
         <div className={styles["chapters-hours-cont"]}>
           {chapters.length === 0 && JSON.stringify(hours) === "{}" && <Empty />}{" "}
           {chapters.length === 0 && JSON.stringify(hours) !== "{}" && (
-            <div className={styles["hours-list-box"]}>
+            <div className={styles["hours-list-box"]} style={{ marginTop: 10 }}>
               {hours[0].map((item: any, index: number) => (
                 <div key={item.id} className={styles["hours-it"]}>
                   {learnHourRecord[item.id] && (
