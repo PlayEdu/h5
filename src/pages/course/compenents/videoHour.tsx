@@ -5,6 +5,7 @@ import { durationFormat } from "../../../utils/index";
 interface PropInterface {
   id: number;
   cid: number;
+  vid: number;
   title: string;
   duration: number;
   record: any;
@@ -15,6 +16,7 @@ interface PropInterface {
 export const HourCompenent: React.FC<PropInterface> = ({
   id,
   cid,
+  vid,
   title,
   duration,
   record,
@@ -34,7 +36,12 @@ export const HourCompenent: React.FC<PropInterface> = ({
             <i className="iconfont icon-icon-video"></i>
             <span className={styles["label"]}>视频</span>
           </div>
-          {progress > 0 && progress < 100 && (
+          {vid === id && (
+            <div className={styles["studying"]}>
+              <span>学习中</span>
+            </div>
+          )}
+          {vid !== id && progress > 0 && progress < 100 && (
             <div className={styles["studying"]}>
               <span>
                 学习到
@@ -42,7 +49,7 @@ export const HourCompenent: React.FC<PropInterface> = ({
               </span>
             </div>
           )}
-          {progress >= 100 && (
+          {vid !== id && progress >= 100 && (
             <div className={styles["complete"]}>
               <span>已学完</span>{" "}
             </div>

@@ -42,6 +42,10 @@ const CoursePage = () => {
       });
   };
 
+  const playVideo = (cid: number, id: number) => {
+    navigate(`/course/${cid}/hour/${id}`);
+  };
+
   return (
     <div className="main-body">
       <div className="main-header" style={{ backgroundColor: "#FF4D4F" }}>
@@ -140,6 +144,9 @@ const CoursePage = () => {
                         (learnHourRecord[item.id].finished_duration * 100) /
                         learnHourRecord[item.id].total_duration
                       }
+                      onSuccess={(cid: number, id: number) => {
+                        playVideo(cid, id);
+                      }}
                     ></HourCompenent>
                   )}
                   {!learnHourRecord[item.id] && (
@@ -150,6 +157,9 @@ const CoursePage = () => {
                       record={null}
                       duration={item.duration}
                       progress={0}
+                      onSuccess={(cid: number, id: number) => {
+                        playVideo(cid, id);
+                      }}
                     ></HourCompenent>
                   )}
                 </div>
@@ -175,6 +185,9 @@ const CoursePage = () => {
                               (learnHourRecord[it.id].finished_duration * 100) /
                               learnHourRecord[it.id].total_duration
                             }
+                            onSuccess={(cid: number, id: number) => {
+                              playVideo(cid, id);
+                            }}
                           ></HourCompenent>
                         )}
                         {!learnHourRecord[it.id] && (
@@ -185,6 +198,9 @@ const CoursePage = () => {
                             record={null}
                             duration={it.duration}
                             progress={0}
+                            onSuccess={(cid: number, id: number) => {
+                              playVideo(cid, id);
+                            }}
                           ></HourCompenent>
                         )}
                       </div>
