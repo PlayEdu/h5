@@ -6,6 +6,10 @@ import { useNavigate } from "react-router-dom";
 import { login, system, user } from "../../api/index";
 import { setToken } from "../../utils/index";
 import { loginAction } from "../../store/user/loginUserSlice";
+import {
+  SystemConfigStoreInterface,
+  saveConfigAction,
+} from "../../store/system/systemConfigSlice";
 import banner from "../../assets/images/login/banner.png";
 
 const LoginPage = () => {
@@ -33,7 +37,7 @@ const LoginPage = () => {
     });
   };
 
-  const loginSubmit = (e: any) => {
+  const loginSubmit = async (e: any) => {
     if (!email) {
       Toast.show({
         content: "请输入学员邮箱账号",
@@ -58,35 +62,64 @@ const LoginPage = () => {
       });
       return;
     }
-    handleSubmit();
+    await handleSubmit();
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (loading) {
       return;
     }
     setLoading(true);
-    login
-      .login(email, password, captchaKey, captchaVal)
-      .then((res: any) => {
-        const token = res.data.token;
-        setToken(token);
-        getUser();
-      })
-      .catch((e) => {
-        setLoading(false);
-        setCaptchaVal("");
-        fetchImageCaptcha();
-      });
-  };
-
-  const getUser = () => {
-    user.detail().then((res: any) => {
-      const data = res.data;
-      dispatch(loginAction(data));
+    try {
+      let res: any = await login.login(email, password, captchaKey, captchaVal);
+      setToken(res.data.token); //将token写入本地
+      await getSystemConfig(); //获取系统配置并写入store
+      await getUser(); //获取登录用户的信息并写入store
       setLoading(false);
       navigate("/member", { replace: true });
-    });
+    } catch (e) {
+      console.error("错误信息", e);
+      setLoading(false);
+      setCaptchaVal("");
+      fetchImageCaptcha(); //刷新图形验证码
+    }
+  };
+
+  const getUser = async () => {
+    let res: any = await user.detail();
+    dispatch(loginAction(res.data));
+  };
+
+  const getSystemConfig = async () => {
+    let configRes: any = await system.config();
+    if (configRes.data) {
+      let config: SystemConfigStoreInterface = {
+        //系统配置
+        systemApiUrl: configRes.data["system-api-url"],
+        systemH5Url: configRes.data["system-h5-url"],
+        systemLogo: configRes.data["system-logo"],
+        systemName: configRes.data["system-name"],
+        systemPcUrl: configRes.data["system-pc-url"],
+        pcIndexFooterMsg: configRes.data["system-pc-index-footer-msg"],
+        //播放器配置
+        playerPoster: configRes.data["player-poster"],
+        playerIsEnabledBulletSecret:
+          configRes.data["player-is-enabled-bullet-secret"] &&
+          configRes.data["player-is-enabled-bullet-secret"] === "1"
+            ? true
+            : false,
+        playerIsDisabledDrag:
+          configRes.data["player-disabled-drag"] &&
+          configRes.data["player-disabled-drag"] === "1"
+            ? true
+            : false,
+        playerBulletSecretText: configRes.data["player-bullet-secret-text"],
+        playerBulletSecretColor: configRes.data["player-bullet-secret-color"],
+        playerBulletSecretOpacity:
+          configRes.data["player-bullet-secret-opacity"],
+      };
+      dispatch(saveConfigAction(config));
+    }
   };
 
   return (
