@@ -273,7 +273,7 @@ const MemberPage = () => {
               </div>
             ) : (
               <div className={styles["value"]}>
-                已学完{" "}<strong>0 </strong>/ 0
+                已学完 <strong>0 </strong>/ 0
               </div>
             )}
           </div>
