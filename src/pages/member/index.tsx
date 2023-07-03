@@ -176,15 +176,11 @@ const MemberPage = () => {
                   天
                 </>
               )}
-              {studyTimeFormat(stats.today_learn_duration)[1] !== 0 && (
-                <>
-                  <strong>
-                    {" "}
-                    {studyTimeFormat(stats.today_learn_duration)[1] || 0}{" "}
-                  </strong>
-                  时
-                </>
-              )}
+              <strong>
+                {" "}
+                {studyTimeFormat(stats.today_learn_duration)[1] || 0}{" "}
+              </strong>
+              时
               <strong>
                 {" "}
                 {studyTimeFormat(stats.today_learn_duration)[2] || 0}{" "}
@@ -203,15 +199,11 @@ const MemberPage = () => {
                   天
                 </>
               )}
-              {studyTimeFormat(stats.learn_duration || 0)[1] !== 0 && (
-                <>
-                  <strong>
-                    {" "}
-                    {studyTimeFormat(stats.learn_duration || 0)[1] || 0}{" "}
-                  </strong>
-                  时
-                </>
-              )}
+              <strong>
+                {" "}
+                {studyTimeFormat(stats.learn_duration || 0)[1] || 0}{" "}
+              </strong>
+              时
               <strong>
                 {" "}
                 {studyTimeFormat(stats.learn_duration || 0)[2] || 0}{" "}
