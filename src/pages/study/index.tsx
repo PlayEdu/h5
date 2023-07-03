@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Image, ProgressBar, SpinLoading } from "antd-mobile";
+import { Image, ProgressBar, Skeleton } from "antd-mobile";
 import styles from "./index.module.scss";
 import { useNavigate } from "react-router-dom";
 import { course } from "../../api/index";
@@ -31,13 +31,24 @@ const StudyPage = () => {
     <div className="main-body">
       <div className={styles["title"]}>最近学习</div>
       <div className={styles["list-box"]}>
-        {loading && (
-          <div
-            style={{ width: "100%", display: "flex", justifyContent: "center" }}
-          >
-            <SpinLoading color="primary" />
-          </div>
-        )}
+        {loading &&
+          Array.from({ length: 2 }).map((_, i) => (
+            <div className={styles["item"]} key={i}>
+              <Skeleton
+                animated
+                style={{
+                  width: 100,
+                  height: 75,
+                  borderRadius: 8,
+                  marginRight: 15,
+                }}
+              />
+              <div className={styles["item-info"]}>
+                <Skeleton animated style={{ width: "100%", height: 21 }} />
+                <Skeleton animated style={{ width: "100%", height: 24 }} />
+              </div>
+            </div>
+          ))}
         {!loading && courses.length === 0 && <Empty></Empty>}
         {/* <div className={styles["label"]}>更早</div> */}
         {!loading &&
