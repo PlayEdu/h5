@@ -13,7 +13,7 @@
   float: left;
   height: auto;
   box-sizing: border-box;
-  padding: 0px 20px;
+  padding: 0px 20px 55px 20px;
   text-align: left;
   overflow-x: hidden;
   overflow-y: auto;
@@ -91,5 +91,11 @@
         }
       }
     }
+  }
+}
+
+@media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+  .list-box {
+    padding-bottom: 89px !important;
   }
 }

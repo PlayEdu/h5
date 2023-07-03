@@ -21,29 +21,45 @@ export const CoursesModel: React.FC<PropInterface> = ({
 }) => {
   const navigate = useNavigate();
   return (
-    <div
-      className={styles["item"]}
-      onClick={() => {
-        navigate(`/course/${id}`);
-      }}
-    >
-      <Image
-        width={100}
-        height={75}
-        style={{ borderRadius: 8, marginRight: 15 }}
-        src={thumb}
-      />
-      <div className={styles["info"]}>
-        <div className={styles["title"]}>{title}</div>
-        <div className={styles["status-content"]}>
-          {isRequired === 1 && <div className={styles["type"]}>必修课</div>}
-          {isRequired === 0 && (
-            <div className={styles["active-type"]}>选修课</div>
-          )}
-          {progress == 0 && (
-            <>
+    <>
+      <div
+        className={styles["item"]}
+        onClick={() => {
+          navigate(`/course/${id}`);
+        }}
+      >
+        <Image
+          width={100}
+          height={75}
+          style={{ borderRadius: 8, marginRight: 15 }}
+          src={thumb}
+        />
+        <div className={styles["info"]}>
+          <div className={styles["title"]}>{title}</div>
+          <div className={styles["status-content"]}>
+            {isRequired === 1 && <div className={styles["type"]}>必修课</div>}
+            {isRequired === 0 && (
+              <div className={styles["active-type"]}>选修课</div>
+            )}
+            {progress == 0 && (
+              <>
+                <ProgressBar
+                  percent={0}
+                  style={{
+                    flex: 1,
+                    "--fill-color": "#FF4D4F",
+                    "--track-color": "#F6F6F6",
+                    "--track-width": "8px",
+                    "--text-width": "27px",
+                  }}
+                />
+                <span className={styles["no-pro"]}>未学习</span>
+              </>
+            )}
+            {progress > 0 && progress < 100 && (
               <ProgressBar
-                percent={0}
+                percent={progress}
+                text
                 style={{
                   flex: 1,
                   "--fill-color": "#FF4D4F",
@@ -52,35 +68,22 @@ export const CoursesModel: React.FC<PropInterface> = ({
                   "--text-width": "27px",
                 }}
               />
-              <span className={styles["no-pro"]}>未学习</span>
-            </>
-          )}
-          {progress > 0 && progress < 100 && (
-            <ProgressBar
-              percent={progress}
-              text
-              style={{
-                flex: 1,
-                "--fill-color": "#FF4D4F",
-                "--track-color": "#F6F6F6",
-                "--track-width": "8px",
-                "--text-width": "27px",
-              }}
-            />
-          )}
-          {progress >= 100 && (
-            <div className={styles["success"]}>
-              <Image
-                width={20}
-                height={20}
-                src={mediaIcon}
-                style={{ marginRight: 5 }}
-              />
-              <span>恭喜你学完此课程!</span>
-            </div>
-          )}
+            )}
+            {progress >= 100 && (
+              <div className={styles["success"]}>
+                <Image
+                  width={20}
+                  height={20}
+                  src={mediaIcon}
+                  style={{ marginRight: 5 }}
+                />
+                <span>恭喜你学完此课程!</span>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+      <div className="sp-line"></div>
+    </>
   );
 };

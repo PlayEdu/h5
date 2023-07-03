@@ -137,3 +137,17 @@ code {
 .adm-tab-bar-item-icon {
   height: 28px !important;
 }
+
+.sp-line {
+  width: 200%;
+  height: 1px;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.05);
+  transform: scale(0.5);
+  -ms-transform: scale(0.5);
+  -o-transform: scale(0.5);
+  -webkit-transform: scale(0.5);
+  -moz-transform: scale(0.5);
+  transform-origin: top left;
+  margin-top: 30px;
+}
