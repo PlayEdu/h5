@@ -36,6 +36,7 @@ const CoursePlayPage = () => {
   const totalRef = useRef(0);
 
   useEffect(() => {
+    window.player && window.player.destroy();
     getCourse();
     getDetail();
   }, [params.courseId, params.hourId]);
@@ -179,11 +180,11 @@ const CoursePlayPage = () => {
         window.player.seek(playRef.current);
         return;
       }
+      setPlayingTime(0);
+      playTimeUpdate(parseInt(window.player.video.currentTime), true);
       exitFullscreen();
       window.player && window.player.destroy();
-      setPlayingTime(0);
       setPlayendedStatus(true);
-      playTimeUpdate(parseInt(window.player.video.currentTime), true);
     });
     setLoading(false);
   };
