@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ImageUploader, Toast, Mask, Image } from "antd-mobile";
+import { ImageUploader, Skeleton, Toast, Mask, Image } from "antd-mobile";
 import { useNavigate } from "react-router-dom";
 import { user as member } from "../../api/index";
 import { getDepName, studyTimeFormat } from "../../utils/index";
@@ -16,6 +16,7 @@ const MemberPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [currentDepartment, setCurrentDepartment] = useState<string>("");
   const [visible, setVisible] = useState(false);
+  const [init, setInit] = useState(false);
   const [stats, setStats] = useState<any>({});
   const [fileList, setFileList] = useState<ImageUploadItem[]>([
     {
@@ -103,6 +104,7 @@ const MemberPage = () => {
     if (res) {
       dispatch(loginAction(res.data));
       setFileList([]);
+      setInit(true);
     }
   };
 
@@ -111,7 +113,30 @@ const MemberPage = () => {
       <div className={styles["content-box"]}>
         <div className={styles["top-content"]}>
           <div className={styles["user-info"]}>
-            {user.name && (
+            {!init && (
+              <>
+                <Skeleton
+                  animated
+                  style={{
+                    width: 100,
+                    height: 100,
+                    borderRadius: "50%",
+                    marginRight: 20,
+                  }}
+                />
+                <div className={styles["other-cont"]}>
+                  <Skeleton
+                    animated
+                    style={{ width: "100%", height: 24, marginTop: 15 }}
+                  />
+                  <Skeleton
+                    animated
+                    style={{ width: "100%", height: 24, marginTop: 20 }}
+                  />
+                </div>
+              </>
+            )}
+            {init && user.name && (
               <>
                 <Image
                   width={100}
