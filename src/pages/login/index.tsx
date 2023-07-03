@@ -19,26 +19,13 @@ const LoginPage = () => {
   const [image, setImage] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [captchaVal, setCaptchaVal] = useState<string>("");
-  const [captchaKey, setCaptchaKey] = useState<string>("");
-  const [captchaLoading, setCaptchaLoading] = useState(true);
   const [bodyHeight, setBodyHeight] = useState<number>(0);
 
   useEffect(() => {
-    fetchImageCaptcha();
     document.title = "登录";
     let value = document.documentElement.clientHeight;
     setBodyHeight(value);
   }, []);
-
-  const fetchImageCaptcha = () => {
-    setCaptchaLoading(true);
-    system.imageCaptcha().then((res: any) => {
-      setImage(res.data.image);
-      setCaptchaKey(res.data.key);
-      setCaptchaLoading(false);
-    });
-  };
 
   const loginSubmit = async (e: any) => {
     if (!email) {
@@ -53,18 +40,6 @@ const LoginPage = () => {
       });
       return;
     }
-    if (!captchaVal) {
-      Toast.show({
-        content: "请输入图形验证码",
-      });
-      return;
-    }
-    if (captchaVal.length < 4) {
-      Toast.show({
-        content: "图形验证码错误",
-      });
-      return;
-    }
     await handleSubmit();
   };
 
@@ -74,7 +49,7 @@ const LoginPage = () => {
     }
     setLoading(true);
     try {
-      let res: any = await login.login(email, password, captchaKey, captchaVal);
+      let res: any = await login.login(email, password);
       setToken(res.data.token); //将token写入本地
       await getSystemConfig(); //获取系统配置并写入store
       await getUser(); //获取登录用户的信息并写入store
@@ -83,8 +58,6 @@ const LoginPage = () => {
     } catch (e) {
       console.error("错误信息", e);
       setLoading(false);
-      setCaptchaVal("");
-      fetchImageCaptcha(); //刷新图形验证码
     }
   };
 
@@ -155,34 +128,10 @@ const LoginPage = () => {
             }}
           />
         </div>
-        <div className={styles["captcha-box"]}>
-          <Input
-            value={captchaVal}
-            className={styles["input-item"]}
-            placeholder="请输入图形验证码"
-            onChange={(val) => {
-              setCaptchaVal(val);
-            }}
-          />
-          <div className={styles["captcha-button"]}>
-            {captchaLoading && (
-              <div className={styles["catpcha-loading-box"]}>
-                <SpinLoading color="primary" />
-              </div>
-            )}
-            {!captchaLoading && (
-              <Image
-                className={styles["captcha"]}
-                onClick={fetchImageCaptcha}
-                src={image}
-              />
-            )}
-          </div>
-        </div>
         <div className={styles["button-box"]}>
           <Button
             className={styles["primary-button"]}
-            disabled={captchaVal === "" || email === "" || password === ""}
+            disabled={email === "" || password === ""}
             color="primary"
             loading={loading}
             onClick={loginSubmit}

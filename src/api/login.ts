@@ -1,16 +1,9 @@
 import client from "./internal/httpClient";
 
-export function login(
-  email: string,
-  password: string,
-  captchaKey: string,
-  captchaVal: string
-) {
+export function login(email: string, password: string) {
   return client.post("/api/v1/auth/login/password", {
     email: email,
     password: password,
-    captcha_key: captchaKey,
-    captcha_val: captchaVal,
   });
 }
 
