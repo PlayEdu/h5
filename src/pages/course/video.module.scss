@@ -19,7 +19,7 @@
   .video-box {
     width: 100%;
     float: left;
-    height: 211px;
+    height: auto;
     position: relative;
     .alert-message {
       position: absolute;
@@ -28,7 +28,7 @@
       right: 0;
       bottom: 0;
       width: 100%;
-      height: 100%;
+      height: 211px;
       background: rgba(0, 0, 0);
       display: flex;
       flex-direction: column;
