@@ -32,7 +32,18 @@ if (getToken()) {
     });
   });
 } else {
-  RootPage = <InitPage />;
+  RootPage = lazy(async () => {
+    return new Promise<any>(async (resolve) => {
+      try {
+        let configRes: any = await system.config();
+        resolve({
+          default: <InitPage configData={configRes.data} />,
+        });
+      } catch (e) {
+        console.error("系统初始化失败", e);
+      }
+    });
+  });
 }
 
 const routes: RouteObject[] = [

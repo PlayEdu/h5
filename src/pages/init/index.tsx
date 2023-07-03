@@ -7,6 +7,7 @@ import {
 } from "../../store/system/systemConfigSlice";
 import { loginAction } from "../../store/user/loginUserSlice";
 import { useParams, useLocation } from "react-router-dom";
+import { isMobile } from "../../utils";
 
 interface Props {
   loginData?: any;
@@ -52,6 +53,14 @@ export const InitPage = (props: Props) => {
       dispatch(saveConfigAction(config));
     }
     setInit(true);
+    if (
+      !isMobile() &&
+      props.configData &&
+      props.configData["system-pc-url"] !== ""
+    ) {
+      let url = props.configData["system-pc-url"];
+      window.location.href = url;
+    }
   }, [props]);
 
   return (
