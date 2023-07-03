@@ -127,7 +127,7 @@ const MemberPage = () => {
                 <div className={styles["other-cont"]}>
                   <Skeleton
                     animated
-                    style={{ width: "100%", height: 24, marginTop: 15 }}
+                    style={{ width: "100%", height: 20, marginTop: 15 }}
                   />
                   <Skeleton
                     animated
