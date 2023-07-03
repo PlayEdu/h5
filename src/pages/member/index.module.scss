@@ -87,6 +87,9 @@
         display: flex;
         flex-direction: column;
         margin-right: 34px;
+        &:last-child {
+          margin-right: 0px;
+        }
         .time {
           height: 20px;
           font-size: 15px;

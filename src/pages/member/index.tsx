@@ -190,11 +190,6 @@ const MemberPage = () => {
                 {studyTimeFormat(stats.today_learn_duration)[2] || 0}{" "}
               </strong>
               分
-              <strong>
-                {" "}
-                {studyTimeFormat(stats.today_learn_duration)[3] || 0}{" "}
-              </strong>
-              秒
             </span>
             <span className={styles["tit"]}>今日学习</span>
           </div>
@@ -222,11 +217,6 @@ const MemberPage = () => {
                 {studyTimeFormat(stats.learn_duration || 0)[2] || 0}{" "}
               </strong>
               分
-              <strong>
-                {" "}
-                {studyTimeFormat(stats.learn_duration || 0)[3] || 0}{" "}
-              </strong>
-              秒
             </span>
             <span className={styles["tit"]}>累计学习</span>
           </div>

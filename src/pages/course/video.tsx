@@ -179,11 +179,11 @@ const CoursePlayPage = () => {
         window.player.seek(playRef.current);
         return;
       }
+      exitFullscreen();
+      window.player && window.player.destroy();
       setPlayingTime(0);
       setPlayendedStatus(true);
       playTimeUpdate(parseInt(window.player.video.currentTime), true);
-      exitFullscreen();
-      window.player && window.player.destroy();
     });
     setLoading(false);
   };
@@ -248,7 +248,9 @@ const CoursePlayPage = () => {
               {isLastpage && (
                 <div
                   className={styles["alert-button"]}
-                  onClick={() => navigate(`/course/${params.courseId}`)}
+                  onClick={() => {
+                    navigate(-1);
+                  }}
                 >
                   恭喜你学完最后一节
                 </div>
@@ -257,7 +259,6 @@ const CoursePlayPage = () => {
                 <div
                   className={styles["alert-button"]}
                   onClick={() => {
-                    window.player && window.player.destroy();
                     setLastSeeValue({});
                     setPlayendedStatus(false);
                     goNextVideo();
