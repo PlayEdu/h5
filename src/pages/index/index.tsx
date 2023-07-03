@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Dropdown, SpinLoading, Tabs } from "antd-mobile";
+import { Dropdown, Skeleton, Tabs } from "antd-mobile";
 import { DropdownRef } from "antd-mobile/es/components/dropdown";
 import { user } from "../../api/index";
 import styles from "./index.module.scss";
@@ -226,13 +226,42 @@ const IndexPage = () => {
         </Dropdown>
       </div>
       <div className={styles["list-box"]}>
-        {loading && (
-          <div
-            style={{ width: "100%", display: "flex", justifyContent: "center" }}
-          >
-            <SpinLoading color="primary" />
-          </div>
-        )}
+        {loading &&
+          Array.from({ length: 2 }).map((_, i) => (
+            <div
+              style={{
+                width: "100%",
+                height: 75,
+                display: "flex",
+                alignItems: "center",
+                marginBottom: 30,
+                marginTop: 30,
+              }}
+              key={i}
+            >
+              <Skeleton
+                animated
+                style={{
+                  width: 100,
+                  height: 75,
+                  borderRadius: 8,
+                  marginRight: 15,
+                }}
+              />
+              <div
+                style={{
+                  flex: 1,
+                  height: 75,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Skeleton animated style={{ width: "100%", height: 21 }} />
+                <Skeleton animated style={{ width: "100%", height: 24 }} />
+              </div>
+            </div>
+          ))}
         {!loading && coursesList.length === 0 && <Empty></Empty>}
         {!loading && coursesList.length > 0 && (
           <>
