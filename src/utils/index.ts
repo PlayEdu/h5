@@ -70,41 +70,6 @@ export function durationFormat(dateStr: number) {
   return hour + minute + second;
 }
 
-export function getTab() {
-  return window.localStorage.getItem("playedu-h5-tabKey") || "0";
-}
-
-export function setTab(token: string) {
-  window.localStorage.setItem("playedu-h5-tabKey", token);
-}
-
-export function clearTab() {
-  window.localStorage.removeItem("playedu-h5-tabKey");
-}
-
-export function getCategory() {
-  return window.localStorage.getItem("playedu-h5-category") || 0;
-}
-
-export function setCategory(token: string) {
-  window.localStorage.setItem("playedu-h5-category", token);
-}
-
-export function clearCategory() {
-  window.localStorage.removeItem("playedu-h5-category");
-}
-export function getCategoryName(): string {
-  return window.localStorage.getItem("playedu-h5-categoryName") || "所有分类";
-}
-
-export function setCategoryName(token: string) {
-  window.localStorage.setItem("playedu-h5-categoryName", token);
-}
-
-export function clearCategoryName() {
-  window.localStorage.removeItem("playedu-h5-categoryName");
-}
-
 export function isMobile() {
   let flag = window.navigator.userAgent.match(
     /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i

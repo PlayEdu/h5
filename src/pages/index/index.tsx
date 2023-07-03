@@ -4,25 +4,24 @@ import { DropdownRef } from "antd-mobile/es/components/dropdown";
 import { user } from "../../api/index";
 import styles from "./index.module.scss";
 import { useSelector } from "react-redux";
-import {
-  setTab,
-  getTab,
-  getCategory,
-  setCategory,
-  setCategoryName,
-  getCategoryName,
-} from "../../utils/index";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Footer, TabBarFooter, Empty } from "../../components";
 import { CoursesModel } from "./compenents/courses-model";
 
 const IndexPage = () => {
   const ref = useRef<DropdownRef>(null);
+  const navigate = useNavigate();
+  const result = new URLSearchParams(useLocation().search);
   const [loading, setLoading] = useState<boolean>(false);
-  const [tabKey, setTabKey] = useState(getTab());
+  const [tabKey, setTabKey] = useState(result.get("tab") || "0");
   const [coursesList, setCoursesList] = useState<any>([]);
   const [categories, setCategories] = useState<any>([]);
-  const [categoryId, setCategoryId] = useState<number>(Number(getCategory()));
-  const [categoryText, setCategoryText] = useState<string>(getCategoryName());
+  const [categoryId, setCategoryId] = useState<number>(
+    Number(result.get("cid") || 0)
+  );
+  const [categoryText, setCategoryText] = useState<string>(
+    String(result.get("catName") || "所有分类")
+  );
   const [learnCourseRecords, setLearnCourseRecords] = useState<any>({});
   const [learnCourseHourCount, setLearnCourseHourCount] = useState<any>({});
   const systemConfig = useSelector((state: any) => state.systemConfig.value);
@@ -167,6 +166,14 @@ const IndexPage = () => {
               onClick={() => {
                 setCategoryId(item.key);
                 setCategoryText(item.title);
+                navigate(
+                  "/?cid=" +
+                    item.key +
+                    "&catName=" +
+                    item.title +
+                    "&tab=" +
+                    tabKey
+                );
                 ref.current?.close();
               }}
             >
@@ -188,7 +195,9 @@ const IndexPage = () => {
           activeKey={tabKey}
           onChange={(key: any) => {
             setTabKey(key);
-            setTab(key);
+            navigate(
+              "/?cid=" + categoryId + "&catName=" + categoryText + "&tab=" + key
+            );
           }}
           style={{
             "--fixed-active-line-width": "20px",
@@ -219,9 +228,15 @@ const IndexPage = () => {
                     className={styles["category-tit"]}
                     onClick={() => {
                       setCategoryId(item.key);
-                      setCategory(item.key);
                       setCategoryText(item.title);
-                      setCategoryName(item.title);
+                      navigate(
+                        "/?cid=" +
+                          item.key +
+                          "&catName=" +
+                          item.title +
+                          "&tab=" +
+                          tabKey
+                      );
                       ref.current?.close();
                     }}
                   >
