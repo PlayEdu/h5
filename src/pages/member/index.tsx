@@ -241,14 +241,14 @@ const MemberPage = () => {
             <div className={styles["value"]}>
               <strong>
                 {getTotal(
-                  stats.required_finished_course_count,
-                  stats.nun_required_finished_course_count
+                  stats.required_finished_hour_count,
+                  stats.nun_required_finished_hour_count
                 )}{" "}
               </strong>
               /{" "}
               {getTotal(
-                stats.required_course_count,
-                stats.nun_required_course_count
+                stats.required_hour_count,
+                stats.nun_required_hour_count
               )}
             </div>
           </div>
