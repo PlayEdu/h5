@@ -15,12 +15,12 @@ export const TabBarFooter: React.FC = () => {
       icon: (active: boolean) =>
         active ? (
           <i
-            style={{ fontSize: 30, color: "#FF4D4F" }}
+            style={{ fontSize: 28, color: "#FF4D4F" }}
             className="iconfont icon-icon-shouye"
           ></i>
         ) : (
           <i
-            style={{ fontSize: 30, color: "#cccccc" }}
+            style={{ fontSize: 28, color: "#cccccc" }}
             className="iconfont icon-icon-shouye"
           ></i>
         ),
@@ -31,12 +31,12 @@ export const TabBarFooter: React.FC = () => {
       icon: (active: boolean) =>
         active ? (
           <i
-            style={{ fontSize: 30, color: "#FF4D4F" }}
+            style={{ fontSize: 28, color: "#FF4D4F" }}
             className="iconfont icon-icon-xuexi"
           ></i>
         ) : (
           <i
-            style={{ fontSize: 30, color: "#cccccc" }}
+            style={{ fontSize: 28, color: "#cccccc" }}
             className="iconfont icon-icon-xuexi"
           ></i>
         ),
@@ -47,12 +47,12 @@ export const TabBarFooter: React.FC = () => {
       icon: (active: boolean) =>
         active ? (
           <i
-            style={{ fontSize: 30, color: "#FF4D4F" }}
+            style={{ fontSize: 28, color: "#FF4D4F" }}
             className="iconfont icon-icon-wode"
           ></i>
         ) : (
           <i
-            style={{ fontSize: 30, color: "#cccccc" }}
+            style={{ fontSize: 28, color: "#cccccc" }}
             className="iconfont icon-icon-wode"
           ></i>
         ),
