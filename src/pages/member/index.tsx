@@ -255,6 +255,7 @@ const MemberPage = () => {
           <div className={styles["record-item"]}>
             <div className={styles["name"]}>必修课</div>
             <div className={styles["value"]}>
+              已学完{" "}
               <strong>{stats.required_finished_course_count || 0} </strong>/{" "}
               {stats.required_course_count || 0}
             </div>
@@ -264,6 +265,7 @@ const MemberPage = () => {
             <div className={styles["name"]}>选修课</div>
             {stats.nun_required_course_count > 0 ? (
               <div className={styles["value"]}>
+                已学完{" "}
                 <strong>
                   {stats.nun_required_finished_course_count || 0}{" "}
                 </strong>
@@ -271,7 +273,7 @@ const MemberPage = () => {
               </div>
             ) : (
               <div className={styles["value"]}>
-                <strong>0 </strong>/ 0
+                已学完{" "}<strong>0 </strong>/ 0
               </div>
             )}
           </div>
