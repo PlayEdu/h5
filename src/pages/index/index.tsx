@@ -4,17 +4,25 @@ import { DropdownRef } from "antd-mobile/es/components/dropdown";
 import { user } from "../../api/index";
 import styles from "./index.module.scss";
 import { useSelector } from "react-redux";
+import {
+  setTab,
+  getTab,
+  getCategory,
+  setCategory,
+  setCategoryName,
+  getCategoryName,
+} from "../../utils/index";
 import { Footer, TabBarFooter, Empty } from "../../components";
 import { CoursesModel } from "./compenents/courses-model";
 
 const IndexPage = () => {
   const ref = useRef<DropdownRef>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const [tabKey, setTabKey] = useState("0");
+  const [tabKey, setTabKey] = useState(getTab());
   const [coursesList, setCoursesList] = useState<any>([]);
   const [categories, setCategories] = useState<any>([]);
-  const [categoryId, setCategoryId] = useState<number>(0);
-  const [categoryText, setCategoryText] = useState<string>("所有分类");
+  const [categoryId, setCategoryId] = useState<number>(Number(getCategory()));
+  const [categoryText, setCategoryText] = useState<string>(getCategoryName());
   const [learnCourseRecords, setLearnCourseRecords] = useState<any>({});
   const [learnCourseHourCount, setLearnCourseHourCount] = useState<any>({});
   const systemConfig = useSelector((state: any) => state.systemConfig.value);
@@ -180,6 +188,7 @@ const IndexPage = () => {
           activeKey={tabKey}
           onChange={(key: any) => {
             setTabKey(key);
+            setTab(key);
           }}
           style={{
             "--fixed-active-line-width": "20px",
@@ -210,7 +219,9 @@ const IndexPage = () => {
                     className={styles["category-tit"]}
                     onClick={() => {
                       setCategoryId(item.key);
+                      setCategory(item.key);
                       setCategoryText(item.title);
+                      setCategoryName(item.title);
                       ref.current?.close();
                     }}
                   >
