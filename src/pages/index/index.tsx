@@ -8,6 +8,10 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Footer, TabBarFooter, Empty } from "../../components";
 import { CoursesModel } from "./compenents/courses-model";
 
+type LocalUserLearnHourRecordModel = {
+  [key: number]: UserLearnHourRecordModel;
+};
+
 const IndexPage = () => {
   const ref = useRef<DropdownRef>(null);
   const navigate = useNavigate();
@@ -22,7 +26,8 @@ const IndexPage = () => {
   const [categoryText, setCategoryText] = useState<string>(
     String(result.get("catName") || "所有分类")
   );
-  const [learnCourseRecords, setLearnCourseRecords] = useState<any>({});
+  const [learnCourseRecords, setLearnCourseRecords] =
+    useState<LocalUserLearnHourRecordModel>({});
   const [learnCourseHourCount, setLearnCourseHourCount] = useState<any>({});
   const systemConfig = useSelector((state: any) => state.systemConfig.value);
   const currentDepId = useSelector(
@@ -293,38 +298,14 @@ const IndexPage = () => {
           <>
             {coursesList.map((item: any) => (
               <div className={styles["item"]} key={item.id}>
-                {learnCourseRecords[item.id] && (
-                  <CoursesModel
-                    id={item.id}
-                    title={item.title}
-                    thumb={item.thumb}
-                    isRequired={item.is_required}
-                    progress={Math.floor(
-                      learnCourseRecords[item.id].progress / 100
-                    )}
-                  ></CoursesModel>
-                )}
-                {!learnCourseRecords[item.id] &&
-                  learnCourseHourCount[item.id] &&
-                  learnCourseHourCount[item.id] > 0 && (
-                    <CoursesModel
-                      id={item.id}
-                      title={item.title}
-                      thumb={item.thumb}
-                      isRequired={item.is_required}
-                      progress={1}
-                    ></CoursesModel>
-                  )}
-                {!learnCourseRecords[item.id] &&
-                  !learnCourseHourCount[item.id] && (
-                    <CoursesModel
-                      id={item.id}
-                      title={item.title}
-                      thumb={item.thumb}
-                      isRequired={item.is_required}
-                      progress={0}
-                    ></CoursesModel>
-                  )}
+                <CoursesModel
+                  id={item.id}
+                  title={item.title}
+                  thumb={item.thumb}
+                  isRequired={item.is_required}
+                  record={learnCourseRecords[item.id]}
+                  hourCount={learnCourseHourCount[item.id]}
+                ></CoursesModel>
               </div>
             ))}
             <Footer></Footer>

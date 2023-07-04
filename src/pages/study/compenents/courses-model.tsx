@@ -10,7 +10,6 @@ interface PropInterface {
   thumb: string;
   isRequired: number;
   record: any;
-  hourCount: number;
 }
 
 export const CoursesModel: React.FC<PropInterface> = ({
@@ -19,7 +18,6 @@ export const CoursesModel: React.FC<PropInterface> = ({
   thumb,
   isRequired,
   record,
-  hourCount,
 }) => {
   const navigate = useNavigate();
   const [userCourseProgress, setUserCourseProgress] = useState(0);
@@ -27,12 +25,10 @@ export const CoursesModel: React.FC<PropInterface> = ({
   useEffect(() => {
     if (record?.progress) {
       setUserCourseProgress(Math.floor(record.progress / 100));
-    } else if (hourCount && hourCount > 0) {
-      setUserCourseProgress(1);
     } else {
-      setUserCourseProgress(0);
+      setUserCourseProgress(1);
     }
-  }, [record, hourCount]);
+  }, [record]);
 
   return (
     <>
@@ -55,22 +51,20 @@ export const CoursesModel: React.FC<PropInterface> = ({
             {isRequired === 0 && (
               <div className={styles["active-type"]}>选修课</div>
             )}
-            {userCourseProgress == 0 && (
-              <>
-                <ProgressBar
-                  percent={0}
-                  style={{
-                    flex: 1,
-                    "--fill-color": "#FF4D4F",
-                    "--track-color": "#F6F6F6",
-                    "--track-width": "8px",
-                    "--text-width": "27px",
-                  }}
-                />
-                <span className={styles["no-pro"]}>未学习</span>
-              </>
+            {userCourseProgress == 1 && (
+              <ProgressBar
+                percent={1}
+                text
+                style={{
+                  flex: 1,
+                  "--fill-color": "#FF4D4F",
+                  "--track-color": "#F6F6F6",
+                  "--track-width": "8px",
+                  "--text-width": "27px",
+                }}
+              />
             )}
-            {userCourseProgress > 0 && userCourseProgress < 100 && (
+            {userCourseProgress > 1 && userCourseProgress < 100 && (
               <ProgressBar
                 percent={userCourseProgress}
                 text
