@@ -69,7 +69,7 @@ const MemberPage = () => {
       if (totalData) {
         setLearnTotalDay(totalData[0]);
         setLearnTotalHour(totalData[1]);
-        setLearnTodayMin(totalData[2]);
+        setLearnTotalMin(totalData[2]);
       }
       setLoading(false);
     });
