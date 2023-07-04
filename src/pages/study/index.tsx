@@ -7,7 +7,7 @@ import { CoursesModel } from "./compenents/courses-model";
 import moment from "moment";
 
 const StudyPage = () => {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
   const [todayCourses, setTodayCourses] = useState<CourseModel[]>([]);
   const [yesterdayCourses, setYesterdayCourses] = useState<CourseModel[]>([]);
   const [courses, setCourses] = useState<CourseModel[]>([]);

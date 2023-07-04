@@ -23,14 +23,14 @@ const CoursePlayPage = () => {
   const params = useParams();
   const systemConfig = useSelector((state: any) => state.systemConfig.value);
   const user = useSelector((state: any) => state.loginUser.value.user);
-  const [playUrl, setPlayUrl] = useState<string>("");
+  const [playUrl, setPlayUrl] = useState("");
   const [playDuration, setPlayDuration] = useState(0);
-  const [playendedStatus, setPlayendedStatus] = useState<Boolean>(false);
+  const [playendedStatus, setPlayendedStatus] = useState(false);
   const [lastSeeValue, setLastSeeValue] = useState({});
   const [course, setCourse] = useState<CourseModel | null>(null);
   const [hour, setHour] = useState<any>({});
-  const [loading, setLoading] = useState<Boolean>(false);
-  const [isLastpage, setIsLastpage] = useState<Boolean>(false);
+  const [loading, setLoading] = useState(false);
+  const [isLastpage, setIsLastpage] = useState(false);
   const [totalHours, setTotalHours] = useState<any>([]);
   const [playingTime, setPlayingTime] = useState(0);
   const [watchedSeconds, setWatchedSeconds] = useState(0);

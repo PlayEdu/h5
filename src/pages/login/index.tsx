@@ -15,10 +15,10 @@ import banner from "../../assets/images/login/banner.png";
 const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [bodyHeight, setBodyHeight] = useState<number>(0);
+  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [bodyHeight, setBodyHeight] = useState(0);
 
   useEffect(() => {
     document.title = "登录";

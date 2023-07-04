@@ -10,7 +10,6 @@ import backIcon from "../../assets/images/commen/icon-back.png";
 const ChangeDepartmentPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState<boolean>(false);
   const departments = useSelector(
     (state: any) => state.loginUser.value.departments
   );

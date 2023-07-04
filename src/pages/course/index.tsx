@@ -65,7 +65,7 @@ const CoursePage = () => {
 
   useEffect(() => {
     if (learnRecord?.progress) {
-      setUserCourseProgress(learnRecord.progress / 100);
+      setUserCourseProgress(Math.floor(learnRecord.progress / 100));
     } else if (learnHourRecord) {
       setUserCourseProgress(1);
     } else {

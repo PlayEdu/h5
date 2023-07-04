@@ -20,7 +20,7 @@ const IndexPage = () => {
   const ref = useRef<DropdownRef>(null);
   const navigate = useNavigate();
   const result = new URLSearchParams(useLocation().search);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
   const [tabKey, setTabKey] = useState(result.get("tab") || "0");
   const [coursesList, setCoursesList] = useState<CourseModel[]>([]);
   const [categories, setCategories] = useState<any>([]);

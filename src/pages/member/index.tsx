@@ -13,10 +13,10 @@ import moreIcon from "../../assets/images/commen/icon-more.png";
 const MemberPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [currentDepartment, setCurrentDepartment] = useState<string>("");
-  const [visible, setVisible] = useState<boolean>(false);
-  const [init, setInit] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
+  const [currentDepartment, setCurrentDepartment] = useState("");
+  const [visible, setVisible] = useState(false);
+  const [init, setInit] = useState(false);
   const [stats, setStats] = useState<any>({});
   const [fileList, setFileList] = useState<ImageUploadItem[]>([
     {
@@ -64,12 +64,18 @@ const MemberPage = () => {
         setLearnTodayDay(todayData[0]);
         setLearnTodayHour(todayData[1]);
         setLearnTodayMin(todayData[2]);
+        if (todayData[2] === 0 && todayData[3] > 0) {
+          setLearnTodayMin(1);
+        }
       }
       let totalData = studyTimeFormat(res.data.stats.learn_duration);
       if (totalData) {
         setLearnTotalDay(totalData[0]);
         setLearnTotalHour(totalData[1]);
         setLearnTotalMin(totalData[2]);
+        if (totalData[2] === 0 && totalData[3] > 0) {
+          setLearnTodayMin(1);
+        }
       }
       setLoading(false);
     });

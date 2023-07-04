@@ -7,10 +7,10 @@ import backIcon from "../../assets/images/commen/icon-back.png";
 
 const ChangePasswordPage = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [oldPassword, setOldPassword] = useState<string>("");
-  const [newPassword, setNewPassword] = useState<string>("");
-  const [againPassword, setAgainPassword] = useState<string>("");
+  const [loading, setLoading] = useState(false);
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [againPassword, setAgainPassword] = useState("");
 
   useEffect(() => {
     document.title = "修改密码";
