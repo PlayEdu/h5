@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Image, ProgressCircle, SpinLoading } from "antd-mobile";
+import { Image, ProgressCircle } from "antd-mobile";
 import styles from "./index.module.scss";
 import { useNavigate, useParams } from "react-router-dom";
 import backIcon from "../../assets/images/commen/icon-back-n.png";
@@ -8,7 +8,7 @@ import { Empty } from "../../components";
 import { HourCompenent } from "./compenents/hour";
 
 const CoursePage = () => {
-  const params = useParams();
+  const { courseId } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
   const [course, setCourse] = useState<any>({});
@@ -18,12 +18,17 @@ const CoursePage = () => {
   const [learnHourRecord, setLearnHourRecord] = useState<any>({});
 
   useEffect(() => {
-    getDetail();
-  }, [params.courseId]);
+    if (courseId !== undefined) {
+      getDetail();
+    }
+  }, [courseId]);
 
   const getDetail = () => {
+    if (loading) {
+      return;
+    }
     setLoading(true);
-    Course.detail(Number(params.courseId))
+    Course.detail(Number(courseId))
       .then((res: any) => {
         document.title = res.data.course.title;
         setCourse(res.data.course);

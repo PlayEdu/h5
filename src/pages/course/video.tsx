@@ -37,8 +37,10 @@ const CoursePlayPage = () => {
 
   useEffect(() => {
     window.player && window.player.destroy();
-    getCourse();
-    getDetail();
+    if (params.courseId && params.hourId) {
+      getCourse();
+      getDetail();
+    }
   }, [params.courseId, params.hourId]);
 
   useEffect(() => {
