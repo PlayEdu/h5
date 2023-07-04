@@ -53,6 +53,25 @@ declare global {
     created_at: string;
     updated_at: string;
   }
+
+  interface UserModel {
+    id: number;
+    name: string;
+    avatar: string;
+    credit1: number;
+    email: string;
+    create_city: string;
+    create_ip: string;
+    id_card: string;
+    is_active: number;
+    is_lock: number;
+    is_set_password: number;
+    is_verify: number;
+    created_at: string;
+    updated_at: string;
+    login_at: string | null;
+    verify_at: string | null;
+  }
 }
 
 export {};

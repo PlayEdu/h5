@@ -15,8 +15,8 @@ const MemberPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
   const [currentDepartment, setCurrentDepartment] = useState<string>("");
-  const [visible, setVisible] = useState(false);
-  const [init, setInit] = useState(false);
+  const [visible, setVisible] = useState<boolean>(false);
+  const [init, setInit] = useState<boolean>(false);
   const [stats, setStats] = useState<any>({});
   const [fileList, setFileList] = useState<ImageUploadItem[]>([
     {
@@ -136,7 +136,7 @@ const MemberPage = () => {
                 </div>
               </>
             )}
-            {init && user.name && (
+            {init && (
               <>
                 <Image
                   width={100}
@@ -146,10 +146,10 @@ const MemberPage = () => {
                     marginRight: 20,
                   }}
                   fit="cover"
-                  src={user.avatar}
+                  src={user?.avatar}
                 />
                 <div className={styles["other-cont"]}>
-                  <div className={styles["name"]}>{user.name}</div>
+                  <div className={styles["name"]}>{user?.name}</div>
                   <div className={styles["departments"]}>
                     <div className={styles["department-name"]}>
                       {currentDepartment}

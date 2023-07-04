@@ -8,7 +8,7 @@ import {
 } from "../../utils/index";
 
 type UserStoreInterface = {
-  user: null;
+  user: UserModel | null;
   departments: string[];
   currentDepId: number;
   isLogin: boolean;
