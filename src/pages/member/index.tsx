@@ -23,6 +23,12 @@ const MemberPage = () => {
       url: "",
     },
   ]);
+  const [learnTodayDay, setLearnTodayDay] = useState(0);
+  const [learnTodayHour, setLearnTodayHour] = useState(0);
+  const [learnTodayMin, setLearnTodayMin] = useState(0);
+  const [learnTotalDay, setLearnTotalDay] = useState(0);
+  const [learnTotalHour, setLearnTotalHour] = useState(0);
+  const [learnTotalMin, setLearnTotalMin] = useState(0);
   const user = useSelector((state: any) => state.loginUser.value.user);
   const departments = useSelector(
     (state: any) => state.loginUser.value.departments
@@ -53,6 +59,18 @@ const MemberPage = () => {
     setLoading(true);
     member.courses(currentDepId, 0).then((res: any) => {
       setStats(res.data.stats);
+      let todayData = studyTimeFormat(res.data.stats.today_learn_duration);
+      if (todayData) {
+        setLearnTodayDay(todayData[0]);
+        setLearnTodayHour(todayData[1]);
+        setLearnTodayMin(todayData[2]);
+      }
+      let totalData = studyTimeFormat(res.data.stats.learn_duration);
+      if (totalData) {
+        setLearnTotalDay(totalData[0]);
+        setLearnTotalHour(totalData[1]);
+        setLearnTodayMin(totalData[2]);
+      }
       setLoading(false);
     });
   };
@@ -168,47 +186,25 @@ const MemberPage = () => {
         <div className={styles["stats-content"]}>
           <div className={styles["stat-item"]}>
             <span className={styles["time"]}>
-              {studyTimeFormat(stats.today_learn_duration)[0] !== 0 && (
+              {learnTodayDay > 0 && (
                 <>
-                  <strong>
-                    {studyTimeFormat(stats.today_learn_duration)[0] || 0}{" "}
-                  </strong>
-                  天
+                  <strong>{learnTodayDay} </strong>天
                 </>
               )}
-              <strong>
-                {" "}
-                {studyTimeFormat(stats.today_learn_duration)[1] || 0}{" "}
-              </strong>
-              时
-              <strong>
-                {" "}
-                {studyTimeFormat(stats.today_learn_duration)[2] || 0}{" "}
-              </strong>
-              分
+              <strong> {learnTodayHour} </strong>时
+              <strong> {learnTodayMin} </strong>分
             </span>
             <span className={styles["tit"]}>今日学习</span>
           </div>
           <div className={styles["stat-item"]}>
             <span className={styles["time"]}>
-              {studyTimeFormat(stats.learn_duration || 0)[0] !== 0 && (
+              {learnTotalDay > 0 && (
                 <>
-                  <strong>
-                    {studyTimeFormat(stats.learn_duration || 0)[0] || 0}{" "}
-                  </strong>
-                  天
+                  <strong>{learnTotalDay} </strong>天
                 </>
               )}
-              <strong>
-                {" "}
-                {studyTimeFormat(stats.learn_duration || 0)[1] || 0}{" "}
-              </strong>
-              时
-              <strong>
-                {" "}
-                {studyTimeFormat(stats.learn_duration || 0)[2] || 0}{" "}
-              </strong>
-              分
+              <strong> {learnTotalHour} </strong>时
+              <strong> {learnTotalMin} </strong>分
             </span>
             <span className={styles["tit"]}>累计学习</span>
           </div>
