@@ -91,7 +91,6 @@ export const CoursesModel: React.FC<PropInterface> = ({
           </div>
         </div>
       </div>
-      <div className="sp-line"></div>
     </>
   );
 };
