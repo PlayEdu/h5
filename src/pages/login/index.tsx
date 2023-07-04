@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Button, Toast, SpinLoading, Input, Image } from "antd-mobile";
+import { Button, Toast, Input, Image } from "antd-mobile";
 import styles from "./index.module.scss";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -16,7 +16,6 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
-  const [image, setImage] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [bodyHeight, setBodyHeight] = useState<number>(0);

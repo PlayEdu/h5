@@ -6,7 +6,6 @@ import {
   saveConfigAction,
 } from "../../store/system/systemConfigSlice";
 import { loginAction } from "../../store/user/loginUserSlice";
-import { useParams, useLocation } from "react-router-dom";
 import { isMobile } from "../../utils";
 
 interface Props {
@@ -15,8 +14,6 @@ interface Props {
 }
 
 export const InitPage = (props: Props) => {
-  const pathname = useLocation().pathname;
-  const params = useParams();
   const dispatch = useDispatch();
   const [init, setInit] = useState<boolean>(false);
 
