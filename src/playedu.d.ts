@@ -69,8 +69,8 @@ declare global {
     is_verify: number;
     created_at: string;
     updated_at: string;
-    login_at: string | null;
-    verify_at: string | null;
+    login_at?: string;
+    verify_at?: string;
   }
 }
 
