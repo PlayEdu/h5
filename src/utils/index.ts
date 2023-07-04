@@ -13,7 +13,7 @@ export function clearToken() {
 }
 
 export function dateFormat(dateStr: string) {
-  return moment(dateStr).format("YYYY-MM-DD HH:mm");
+  return moment(dateStr).utcOffset(0).format("YYYY-MM-DD HH:mm");
 }
 
 export function getHost() {

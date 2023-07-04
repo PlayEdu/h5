@@ -29,27 +29,21 @@ const StudyPage = () => {
       let box: CourseModel[] = [];
       if (data && data.length > 0) {
         data.map((item: any) => {
-          if (
-            item.hour_record &&
-            moment(item.hour_record.updated_at).isSame(moment(), "day")
-          ) {
+          let time = moment(item.hour_record.updated_at)
+            .utcOffset(0)
+            .format("YYYY-MM-DD HH:mm:ss");
+          if (moment(time).isSame(moment(), "day")) {
             today.push(item);
-          } else if (
-            item.hour_record &&
-            moment(item.hour_record.updated_at).isSame(
-              moment().subtract(1, "day"),
-              "day"
-            )
-          ) {
+          } else if (moment(time).isSame(moment().subtract(1, "day"), "day")) {
             yesterday.push(item);
           } else {
             box.push(item);
           }
-          setTodayCourses(today);
-          setYesterdayCourses(yesterday);
-          setCourses(box);
         });
       }
+      setTodayCourses(today);
+      setYesterdayCourses(yesterday);
+      setCourses(box);
       setLoading(false);
     });
   };
