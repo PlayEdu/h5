@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./hour.module.scss";
 import { durationFormat } from "../../../utils/index";
 
@@ -8,7 +8,6 @@ interface PropInterface {
   title: string;
   duration: number;
   record: any;
-  progress: number;
   onSuccess: (cid: number, id: number) => void;
 }
 
@@ -18,9 +17,17 @@ export const HourCompenent: React.FC<PropInterface> = ({
   title,
   duration,
   record,
-  progress,
   onSuccess,
 }) => {
+  const [userProgress, setUserProgress] = useState(0);
+  useEffect(() => {
+    if (record?.finished_duration && record?.total_duration) {
+      setUserProgress((record.finished_duration * 100) / record.total_duration);
+    } else {
+      setUserProgress(0);
+    }
+  }, [record]);
+
   return (
     <>
       <div
@@ -34,7 +41,7 @@ export const HourCompenent: React.FC<PropInterface> = ({
             <i className="iconfont icon-icon-video"></i>
             <span className={styles["label"]}>视频</span>
           </div>
-          {progress > 0 && progress < 100 && (
+          {userProgress > 0 && userProgress < 100 && (
             <div className={styles["studying"]}>
               <span>
                 学习到
@@ -42,14 +49,14 @@ export const HourCompenent: React.FC<PropInterface> = ({
               </span>
             </div>
           )}
-          {progress >= 100 && (
+          {userProgress >= 100 && (
             <div className={styles["complete"]}>
               <span>已学完</span>{" "}
             </div>
           )}
         </div>
         <div className={styles["title"]}>
-          {title}{" "}({durationFormat(Number(duration))})
+          {title} ({durationFormat(Number(duration))})
         </div>
       </div>
     </>

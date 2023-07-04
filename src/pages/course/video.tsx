@@ -10,6 +10,14 @@ import { HourCompenent } from "./compenents/videoHour";
 
 declare const window: any;
 
+type LocalUserLearnHourRecordModel = {
+  [key: number]: UserLearnHourRecordModel;
+};
+
+type LocalCourseHour = {
+  [key: number]: CourseHourModel[];
+};
+
 const CoursePlayPage = () => {
   const navigate = useNavigate();
   const params = useParams();
@@ -19,17 +27,17 @@ const CoursePlayPage = () => {
   const [playDuration, setPlayDuration] = useState(0);
   const [playendedStatus, setPlayendedStatus] = useState<Boolean>(false);
   const [lastSeeValue, setLastSeeValue] = useState({});
-  const [course, setCourse] = useState<any>({});
+  const [course, setCourse] = useState<CourseModel | null>(null);
   const [hour, setHour] = useState<any>({});
   const [loading, setLoading] = useState<Boolean>(false);
   const [isLastpage, setIsLastpage] = useState<Boolean>(false);
   const [totalHours, setTotalHours] = useState<any>([]);
   const [playingTime, setPlayingTime] = useState(0);
   const [watchedSeconds, setWatchedSeconds] = useState(0);
-  const [chapters, setChapters] = useState<any>([]);
-  const [hours, setHours] = useState<any>({});
-  const [learnRecord, setLearnRecord] = useState<any>({});
-  const [learnHourRecord, setLearnHourRecord] = useState<any>({});
+  const [chapters, setChapters] = useState<ChapterModel[]>([]);
+  const [hours, setHours] = useState<LocalCourseHour | null>(null);
+  const [learnHourRecord, setLearnHourRecord] =
+    useState<LocalUserLearnHourRecordModel>({});
   const myRef = useRef(0);
   const playRef = useRef(0);
   const watchRef = useRef(0);
@@ -61,9 +69,6 @@ const CoursePlayPage = () => {
     Course.detail(Number(params.courseId)).then((res: any) => {
       setChapters(res.data.chapters);
       setHours(res.data.hours);
-      if (res.data.learn_record) {
-        setLearnRecord(res.data.learn_record);
-      }
       if (res.data.learn_hour_records) {
         setLearnHourRecord(res.data.learn_hour_records);
       }
@@ -97,7 +102,8 @@ const CoursePlayPage = () => {
     setLoading(true);
     Course.play(Number(params.courseId), Number(params.hourId))
       .then((res: any) => {
-        setCourse(res.data.course);
+        let courseItem: CourseModel = res.data.course;
+        setCourse(courseItem);
         setHour(res.data.hour);
         document.title = res.data.hour.title;
         let record = res.data.user_hour_record;
@@ -276,87 +282,46 @@ const CoursePlayPage = () => {
         </div>
       </div>
       <div className={styles["chapters-hours-cont"]}>
-        {chapters.length === 0 && JSON.stringify(hours) === "{}" && <Empty />}{" "}
-        {chapters.length === 0 && JSON.stringify(hours) !== "{}" && (
-          <div className={styles["hours-list-box"]}>
-            {hours[0].map((item: any, index: number) => (
+        {chapters.length === 0 && !hours && <Empty />}
+        {chapters.length === 0 && hours && (
+          <div className={styles["hours-list-box"]} style={{ marginTop: 10 }}>
+            {hours[0].map((item: CourseHourModel) => (
               <div key={item.id} className={styles["hours-it"]}>
-                {learnHourRecord[item.id] && (
-                  <HourCompenent
-                    id={item.id}
-                    cid={item.course_id}
-                    title={item.title}
-                    record={learnHourRecord[item.id]}
-                    duration={item.duration}
-                    vid={Number(params.hourId)}
-                    progress={
-                      (learnHourRecord[item.id].finished_duration * 100) /
-                      learnHourRecord[item.id].total_duration
-                    }
-                    onSuccess={(cid: number, id: number) => {
-                      playVideo(cid, id);
-                    }}
-                  ></HourCompenent>
-                )}
-                {!learnHourRecord[item.id] && (
-                  <HourCompenent
-                    id={item.id}
-                    cid={item.course_id}
-                    title={item.title}
-                    record={null}
-                    duration={item.duration}
-                    vid={Number(params.hourId)}
-                    progress={0}
-                    onSuccess={(cid: number, id: number) => {
-                      playVideo(cid, id);
-                    }}
-                  ></HourCompenent>
-                )}
+                <HourCompenent
+                  id={item.id}
+                  cid={item.course_id}
+                  title={item.title}
+                  record={learnHourRecord[item.id]}
+                  duration={item.duration}
+                  vid={Number(params.hourId)}
+                  onSuccess={(cid: number, id: number) => {
+                    playVideo(cid, id);
+                  }}
+                ></HourCompenent>
               </div>
             ))}
           </div>
         )}
-        {chapters.length > 0 && JSON.stringify(hours) !== "{}" && (
+        {chapters.length > 0 && hours && (
           <div className={styles["hours-list-box"]}>
-            {chapters.map((item: any, index: number) => (
+            {chapters.map((item: ChapterModel) => (
               <div key={item.id} className={styles["chapter-it"]}>
                 <div className={styles["chapter-name"]}>{item.name}</div>
-                {hours[item.id] &&
-                  hours[item.id].map((it: any, int: number) => (
-                    <div key={it.id} className={styles["hours-it"]}>
-                      {learnHourRecord[it.id] && (
-                        <HourCompenent
-                          id={it.id}
-                          cid={item.course_id}
-                          title={it.title}
-                          record={learnHourRecord[it.id]}
-                          duration={it.duration}
-                          vid={Number(params.hourId)}
-                          progress={
-                            (learnHourRecord[it.id].finished_duration * 100) /
-                            learnHourRecord[it.id].total_duration
-                          }
-                          onSuccess={(cid: number, id: number) => {
-                            playVideo(cid, id);
-                          }}
-                        ></HourCompenent>
-                      )}
-                      {!learnHourRecord[it.id] && (
-                        <HourCompenent
-                          id={it.id}
-                          cid={item.course_id}
-                          title={it.title}
-                          record={null}
-                          duration={it.duration}
-                          vid={Number(params.hourId)}
-                          progress={0}
-                          onSuccess={(cid: number, id: number) => {
-                            playVideo(cid, id);
-                          }}
-                        ></HourCompenent>
-                      )}
-                    </div>
-                  ))}
+                {hours[item.id]?.map((it: CourseHourModel) => (
+                  <div key={it.id} className={styles["hours-it"]}>
+                    <HourCompenent
+                      id={it.id}
+                      cid={item.course_id}
+                      title={it.title}
+                      record={learnHourRecord[it.id]}
+                      duration={it.duration}
+                      vid={Number(params.hourId)}
+                      onSuccess={(cid: number, id: number) => {
+                        playVideo(cid, id);
+                      }}
+                    ></HourCompenent>
+                  </div>
+                ))}
               </div>
             ))}
           </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./hour.module.scss";
 import { durationFormat } from "../../../utils/index";
 
@@ -9,7 +9,6 @@ interface PropInterface {
   title: string;
   duration: number;
   record: any;
-  progress: number;
   onSuccess: (cid: number, id: number) => void;
 }
 
@@ -20,9 +19,16 @@ export const HourCompenent: React.FC<PropInterface> = ({
   title,
   duration,
   record,
-  progress,
   onSuccess,
 }) => {
+  const [userProgress, setUserProgress] = useState(0);
+  useEffect(() => {
+    if (record?.finished_duration && record?.total_duration) {
+      setUserProgress((record.finished_duration * 100) / record.total_duration);
+    } else {
+      setUserProgress(0);
+    }
+  }, [record]);
   return (
     <>
       <div
@@ -41,7 +47,7 @@ export const HourCompenent: React.FC<PropInterface> = ({
               <span>学习中</span>
             </div>
           )}
-          {vid !== id && progress > 0 && progress < 100 && (
+          {vid !== id && userProgress > 0 && userProgress < 100 && (
             <div className={styles["studying"]}>
               <span>
                 学习到
@@ -49,7 +55,7 @@ export const HourCompenent: React.FC<PropInterface> = ({
               </span>
             </div>
           )}
-          {vid !== id && progress >= 100 && (
+          {vid !== id && userProgress >= 100 && (
             <div className={styles["complete"]}>
               <span>已学完</span>{" "}
             </div>

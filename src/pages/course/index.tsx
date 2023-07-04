@@ -128,34 +128,16 @@ const CoursePage = () => {
             <div className={styles["hours-list-box"]} style={{ marginTop: 10 }}>
               {hours[0].map((item: CourseHourModel) => (
                 <div key={item.id} className={styles["hours-it"]}>
-                  {learnHourRecord[item.id] ? (
-                    <HourCompenent
-                      id={item.id}
-                      cid={item.course_id}
-                      title={item.title}
-                      record={learnHourRecord[item.id]}
-                      duration={item.duration}
-                      progress={
-                        (learnHourRecord[item.id].finished_duration * 100) /
-                        learnHourRecord[item.id].total_duration
-                      }
-                      onSuccess={(cid: number, id: number) => {
-                        playVideo(cid, id);
-                      }}
-                    ></HourCompenent>
-                  ) : (
-                    <HourCompenent
-                      id={item.id}
-                      cid={item.course_id}
-                      title={item.title}
-                      record={null}
-                      duration={item.duration}
-                      progress={0}
-                      onSuccess={(cid: number, id: number) => {
-                        playVideo(cid, id);
-                      }}
-                    ></HourCompenent>
-                  )}
+                  <HourCompenent
+                    id={item.id}
+                    cid={item.course_id}
+                    title={item.title}
+                    record={learnHourRecord[item.id]}
+                    duration={item.duration}
+                    onSuccess={(cid: number, id: number) => {
+                      playVideo(cid, id);
+                    }}
+                  ></HourCompenent>
                 </div>
               ))}
             </div>
@@ -168,35 +150,16 @@ const CoursePage = () => {
                   <div className={styles["chapter-name"]}>{item.name}</div>
                   {hours[item.id]?.map((it: CourseHourModel) => (
                     <div key={it.id} className={styles["hours-it"]}>
-                      {learnHourRecord[it.id] && (
-                        <HourCompenent
-                          id={it.id}
-                          cid={item.course_id}
-                          title={it.title}
-                          record={learnHourRecord[it.id]}
-                          duration={it.duration}
-                          progress={
-                            (learnHourRecord[it.id].finished_duration * 100) /
-                            learnHourRecord[it.id].total_duration
-                          }
-                          onSuccess={(cid: number, id: number) => {
-                            playVideo(cid, id);
-                          }}
-                        ></HourCompenent>
-                      )}
-                      {!learnHourRecord[it.id] && (
-                        <HourCompenent
-                          id={it.id}
-                          cid={item.course_id}
-                          title={it.title}
-                          record={null}
-                          duration={it.duration}
-                          progress={0}
-                          onSuccess={(cid: number, id: number) => {
-                            playVideo(cid, id);
-                          }}
-                        ></HourCompenent>
-                      )}
+                      <HourCompenent
+                        id={it.id}
+                        cid={item.course_id}
+                        title={it.title}
+                        record={learnHourRecord[it.id]}
+                        duration={it.duration}
+                        onSuccess={(cid: number, id: number) => {
+                          playVideo(cid, id);
+                        }}
+                      ></HourCompenent>
                     </div>
                   ))}
                 </div>
