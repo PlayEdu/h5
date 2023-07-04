@@ -3,7 +3,7 @@ import { Image, ProgressCircle } from "antd-mobile";
 import styles from "./index.module.scss";
 import { useNavigate, useParams } from "react-router-dom";
 import backIcon from "../../assets/images/commen/icon-back-n.png";
-import { course as Course } from "../../api/index";
+import { course as vod } from "../../api/index";
 import { Empty } from "../../components";
 import { HourCompenent } from "./compenents/hour";
 
@@ -18,33 +18,24 @@ const CoursePage = () => {
   const [learnHourRecord, setLearnHourRecord] = useState<any>({});
 
   useEffect(() => {
-    if (courseId !== undefined) {
-      getDetail();
+    if (courseId) {
+      getDetail(Number(courseId));
     }
   }, [courseId]);
 
-  const getDetail = () => {
-    if (loading) {
-      return;
-    }
-    setLoading(true);
-    Course.detail(Number(courseId))
-      .then((res: any) => {
-        document.title = res.data.course.title;
-        setCourse(res.data.course);
-        setChapters(res.data.chapters);
-        setHours(res.data.hours);
-        if (res.data.learn_record) {
-          setLearnRecord(res.data.learn_record);
-        }
-        if (res.data.learn_hour_records) {
-          setLearnHourRecord(res.data.learn_hour_records);
-        }
-        setLoading(false);
-      })
-      .catch((e) => {
-        setLoading(false);
-      });
+  const getDetail = (cid: number) => {
+    vod.detail(cid).then((res: any) => {
+      document.title = res.data.course.title;
+      setCourse(res.data.course);
+      setChapters(res.data.chapters);
+      setHours(res.data.hours);
+      if (res.data.learn_record) {
+        setLearnRecord(res.data.learn_record);
+      }
+      if (res.data.learn_hour_records) {
+        setLearnHourRecord(res.data.learn_hour_records);
+      }
+    });
   };
 
   const playVideo = (cid: number, id: number) => {

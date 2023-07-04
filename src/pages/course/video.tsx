@@ -37,10 +37,8 @@ const CoursePlayPage = () => {
 
   useEffect(() => {
     window.player && window.player.destroy();
-    if (params.courseId && params.hourId) {
-      getCourse();
-      getDetail();
-    }
+    getCourse();
+    getDetail();
   }, [params.courseId, params.hourId]);
 
   useEffect(() => {
@@ -242,7 +240,10 @@ const CoursePlayPage = () => {
         <Image
           className={styles["back-icon"]}
           src={backIcon}
-          onClick={() => navigate(-1)}
+          onClick={() => {
+            window.player && window.player.destroy();
+            navigate(-1);
+          }}
         />
         <div className={styles["video-box"]}>
           <div className="play-box" id="meedu-player-container"></div>
