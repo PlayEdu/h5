@@ -12,13 +12,17 @@ type LocalUserLearnHourRecordModel = {
   [key: number]: UserLearnHourRecordModel;
 };
 
+type LocalUserLearnHourCountModel = {
+  [key: number]: number;
+};
+
 const IndexPage = () => {
   const ref = useRef<DropdownRef>(null);
   const navigate = useNavigate();
   const result = new URLSearchParams(useLocation().search);
   const [loading, setLoading] = useState<boolean>(false);
   const [tabKey, setTabKey] = useState(result.get("tab") || "0");
-  const [coursesList, setCoursesList] = useState<any>([]);
+  const [coursesList, setCoursesList] = useState<CourseModel[]>([]);
   const [categories, setCategories] = useState<any>([]);
   const [categoryId, setCategoryId] = useState<number>(
     Number(result.get("cid") || 0)
@@ -28,12 +32,12 @@ const IndexPage = () => {
   );
   const [learnCourseRecords, setLearnCourseRecords] =
     useState<LocalUserLearnHourRecordModel>({});
-  const [learnCourseHourCount, setLearnCourseHourCount] = useState<any>({});
+  const [learnCourseHourCount, setLearnCourseHourCount] =
+    useState<LocalUserLearnHourCountModel>({});
   const systemConfig = useSelector((state: any) => state.systemConfig.value);
   const currentDepId = useSelector(
     (state: any) => state.loginUser.value.currentDepId
   );
-
   const items = [
     {
       key: "0",
