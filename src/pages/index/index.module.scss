@@ -79,7 +79,7 @@
   height: auto;
   box-sizing: border-box;
   padding-left: 20px;
-  .category-tit {
+  .category-child-tit {
     width: 100%;
     font-size: 14px;
     font-weight: 400;
@@ -98,11 +98,11 @@
   height: auto;
   box-sizing: border-box;
   padding-left: 20px;
-  .category-tit {
+  .category-child-tit {
     width: 100%;
     font-size: 14px;
     font-weight: 400;
-    color: #ff4d4f;
+    color: #ff4d4f !important;
     line-height: 30px;
     margin-bottom: 15px;
     white-space: nowrap;

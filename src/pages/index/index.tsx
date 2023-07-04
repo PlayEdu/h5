@@ -171,7 +171,7 @@ const IndexPage = () => {
             }
           >
             <div
-              className={styles["category-tit"]}
+              className={styles["category-child-tit"]}
               onClick={() => {
                 setCategoryId(item.key);
                 setCategoryText(item.title);
