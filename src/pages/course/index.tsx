@@ -52,7 +52,7 @@ const CoursePage = () => {
         setLearnRecord(res.data.learn_record);
       }
 
-      if (JSON.stringify(res.data.learn_hour_records) !== "{}") {
+      if (res.data.learn_hour_records) {
         setLearnHourRecord(res.data.learn_hour_records);
       }
     });
