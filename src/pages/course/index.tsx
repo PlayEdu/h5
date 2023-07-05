@@ -4,6 +4,7 @@ import styles from "./index.module.scss";
 import { useNavigate, useParams } from "react-router-dom";
 import backIcon from "../../assets/images/commen/icon-back-n.png";
 import { course as vod } from "../../api/index";
+import { isEmptyObject } from "../../utils/index";
 import { Empty } from "../../components";
 import { HourCompenent } from "./compenents/hour";
 
@@ -68,7 +69,7 @@ const CoursePage = () => {
   useEffect(() => {
     if (learnRecord?.progress) {
       setUserCourseProgress(Math.floor(learnRecord.progress / 100));
-    } else if (learnHourRecord && JSON.stringify(learnHourRecord) !== "{}") {
+    } else if (learnHourRecord && !isEmptyObject(learnHourRecord)) {
       setUserCourseProgress(1);
     } else {
       setUserCourseProgress(0);
