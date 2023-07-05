@@ -85,11 +85,14 @@ const CoursePlayPage = () => {
         setTotalHours(arr);
         totalHours = arr;
       }
+      //判断是否是最后的课时
       const index = totalHours.findIndex(
         (i: any) => i.id === Number(params.hourId)
       );
       if (index === totalHours.length - 1) {
         setIsLastpage(true);
+      } else {
+        setIsLastpage(false);
       }
     });
   };
@@ -186,11 +189,11 @@ const CoursePlayPage = () => {
         window.player.seek(playRef.current);
         return;
       }
+      setPlayendedStatus(true);
       setPlayingTime(0);
       playTimeUpdate(parseInt(window.player.video.currentTime), true);
       exitFullscreen();
       window.player && window.player.destroy();
-      setPlayendedStatus(true);
     });
     setLoading(false);
   };
@@ -217,6 +220,7 @@ const CoursePlayPage = () => {
       setIsLastpage(true);
       Toast.show("已经是最后一节了！");
     } else if (index < totalHours.length - 1) {
+      setIsLastpage(false);
       navigate(`/course/${params.courseId}/hour/${totalHours[index + 1].id}`, {
         replace: true,
       });
@@ -251,7 +255,11 @@ const CoursePlayPage = () => {
           }}
         />
         <div className={styles["video-box"]}>
-          <div className="play-box" id="meedu-player-container"></div>
+          <div
+            className="play-box"
+            style={{ display: playendedStatus ? "none" : "block" }}
+            id="meedu-player-container"
+          ></div>
           {playendedStatus && (
             <div className={styles["alert-message"]}>
               {isLastpage && (
