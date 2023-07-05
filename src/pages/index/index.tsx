@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Footer, TabBarFooter, Empty } from "../../components";
 import { CoursesModel } from "./compenents/courses-model";
+import { isEmptyObject } from "../../utils/index";
 
 type LocalUserLearnHourRecordModel = {
   [key: number]: UserLearnHourRecordModel;
@@ -74,7 +75,7 @@ const IndexPage = () => {
       return;
     }
     getData();
-  }, [tabKey, currentDepId, categoryId]);
+  }, [currentDepId, categoryId]);
 
   const getData = () => {
     setLoading(true);
@@ -127,7 +128,7 @@ const IndexPage = () => {
   const getParams = () => {
     user.coursesCategories().then((res: any) => {
       const categories = res.data.categories;
-      if (JSON.stringify(categories) !== "{}") {
+      if (!isEmptyObject(categories)) {
         const new_arr: any[] = checkArr(categories, 0);
         new_arr.unshift({
           key: 0,
@@ -204,9 +205,16 @@ const IndexPage = () => {
           activeKey={tabKey}
           onChange={(key: any) => {
             setTabKey(key);
-            navigate(
-              "/?cid=" + categoryId + "&catName=" + categoryText + "&tab=" + key
-            );
+            setTimeout(() => {
+              navigate(
+                "/?cid=" +
+                  categoryId +
+                  "&catName=" +
+                  categoryText +
+                  "&tab=" +
+                  key
+              );
+            }, 250);
           }}
           style={{
             "--fixed-active-line-width": "20px",
