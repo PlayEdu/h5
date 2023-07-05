@@ -44,7 +44,6 @@ const CoursePlayPage = () => {
   const totalRef = useRef(0);
 
   useEffect(() => {
-    window.player && window.player.destroy();
     getCourse();
     getDetail();
   }, [params.courseId, params.hourId]);
@@ -129,6 +128,7 @@ const CoursePlayPage = () => {
   const getVideoUrl = (data: any) => {
     Course.playUrl(Number(params.courseId), Number(params.hourId)).then(
       (res: any) => {
+        window.player && window.player.destroy();
         setPlayUrl(res.data.url);
         initDPlayer(res.data.url, 0, data);
       }
@@ -236,7 +236,6 @@ const CoursePlayPage = () => {
   };
 
   const playVideo = (cid: number, id: number) => {
-    window.player && window.player.destroy();
     navigate(`/course/${cid}/hour/${id}`, { replace: true });
   };
 

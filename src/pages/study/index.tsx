@@ -21,37 +21,41 @@ const StudyPage = () => {
   }, []);
 
   const getCourses = () => {
+    if (loading) {
+      return;
+    }
     setLoading(true);
-    course.latestLearn().then((res: any) => {
-      let data = res.data;
-      let today: CourseModel[] = [];
-      let yesterday: CourseModel[] = [];
-      let box: CourseModel[] = [];
-      if (data && data.length > 0) {
-        data.map((item: any) => {
-          if (
-            item.hour_record &&
-            moment(item.hour_record.updated_at).isSame(moment(), "day")
-          ) {
-            today.push(item);
-          } else if (
-            item.hour_record &&
-            moment(item.hour_record.updated_at).isSame(
-              moment().subtract(1, "day"),
-              "day"
-            )
-          ) {
-            yesterday.push(item);
-          } else {
-            box.push(item);
-          }
-          setTodayCourses(today);
-          setYesterdayCourses(yesterday);
-          setCourses(box);
-        });
-      }
-      setLoading(false);
-    });
+    course
+      .latestLearn()
+      .then((res: any) => {
+        let data = res.data;
+        let today: CourseModel[] = [];
+        let yesterday: CourseModel[] = [];
+        let box: CourseModel[] = [];
+        if (data && data.length > 0) {
+          data.map((item: any) => {
+            let time = moment(item.hour_record.updated_at)
+              .utcOffset(0)
+              .format("YYYY-MM-DD HH:mm:ss");
+            if (moment(time).isSame(moment(), "day")) {
+              today.push(item);
+            } else if (
+              moment(time).isSame(moment().subtract(1, "day"), "day")
+            ) {
+              yesterday.push(item);
+            } else {
+              box.push(item);
+            }
+          });
+        }
+        setTodayCourses(today);
+        setYesterdayCourses(yesterday);
+        setCourses(box);
+        setLoading(false);
+      })
+      .catch((e) => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -76,7 +80,10 @@ const StudyPage = () => {
               </div>
             </div>
           ))}
-        {!loading && courses.length === 0 && <Empty></Empty>}
+        {!loading &&
+          courses.length === 0 &&
+          todayCourses.length === 0 &&
+          yesterdayCourses.length === 0 && <Empty></Empty>}
         {!loading && (
           <>
             {todayCourses.length > 0 && (
