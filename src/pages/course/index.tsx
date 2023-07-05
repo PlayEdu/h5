@@ -30,7 +30,6 @@ const CoursePage = () => {
     useState<LocalUserLearnHourRecordModel>({});
 
   const [courseTypeText, setCourseTypeText] = useState("");
-  const [courseTitle, setCourseTitle] = useState("");
   const [userCourseProgress, setUserCourseProgress] = useState(0);
 
   useEffect(() => {
@@ -62,7 +61,6 @@ const CoursePage = () => {
   useEffect(() => {
     if (course) {
       setCourseTypeText(course.is_required === 1 ? "必修课" : "选修课");
-      setCourseTitle(course.title);
     }
   }, [course]);
 
@@ -90,7 +88,7 @@ const CoursePage = () => {
         />
       </div>
       <div className={styles["top-content"]}>
-        <div className={styles["title"]}>{courseTitle}</div>
+        <div className={styles["title"]}>{course?.title + ""}</div>
         <div className={styles["info-content"]}>
           <div className={styles["info"]}>
             <div className={styles["record"]}>
