@@ -90,15 +90,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-}
-
-.active-child-item {
-  width: 100%;
-  float: left;
-  height: auto;
-  box-sizing: border-box;
-  padding-left: 20px;
-  .category-child-tit {
+  .act-category-child-tit {
     width: 100%;
     font-size: 14px;
     font-weight: 400;

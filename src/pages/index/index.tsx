@@ -163,16 +163,13 @@ const IndexPage = () => {
     return (
       <>
         {data.map((item: any) => (
-          <div
-            key={item.key}
-            className={
-              item.key === categoryId
-                ? styles["active-child-item"]
-                : styles["child-item"]
-            }
-          >
+          <div key={item.key} className={styles["child-item"]}>
             <div
-              className={styles["category-child-tit"]}
+              className={
+                item.key === categoryId
+                  ? styles["act-category-child-tit"]
+                  : styles["category-child-tit"]
+              }
               onClick={() => {
                 setCategoryId(item.key);
                 setCategoryText(item.title);
