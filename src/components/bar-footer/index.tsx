@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { NavBar, Badge, TabBar } from "antd-mobile";
+import React from "react";
+import { TabBar } from "antd-mobile";
 import styles from "./index.module.scss";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export const TabBarFooter: React.FC = () => {
   const navigate = useNavigate();

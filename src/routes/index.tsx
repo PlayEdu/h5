@@ -5,6 +5,9 @@ import { getToken } from "../utils";
 // 页面加载
 import { InitPage } from "../pages/init";
 import LoginPage from "../pages/login";
+import WithFooter from "../pages/layouts/with-footer";
+import WithoutFooter from "../pages/layouts/without-footer";
+
 //用户中心页面
 const MemberPage = lazy(() => import("../pages/member/index"));
 //主页
@@ -62,35 +65,47 @@ const routes: RouteObject[] = [
     children: [
       {
         path: "/",
-        element: <PrivateRoute Component={<IndexPage />} />,
+        element: <WithFooter />,
+        children: [
+          {
+            path: "/",
+            element: <PrivateRoute Component={<IndexPage />} />,
+          },
+          {
+            path: "/member",
+            element: <PrivateRoute Component={<MemberPage />} />,
+          },
+          {
+            path: "/study",
+            element: <PrivateRoute Component={<StudyPage />} />,
+          },
+        ],
       },
       {
-        path: "/login",
-        element: <LoginPage />,
-      },
-      {
-        path: "/member",
-        element: <PrivateRoute Component={<MemberPage />} />,
-      },
-      {
-        path: "/change-password",
-        element: <PrivateRoute Component={<ChangePasswordPage />} />,
-      },
-      {
-        path: "/study",
-        element: <PrivateRoute Component={<StudyPage />} />,
-      },
-      {
-        path: "/change-department",
-        element: <PrivateRoute Component={<ChangeDepartmentPage />} />,
-      },
-      {
-        path: "/course/:courseId",
-        element: <PrivateRoute Component={<CoursePage />} />,
-      },
-      {
-        path: "/course/:courseId/hour/:hourId",
-        element: <PrivateRoute Component={<CoursePlayPage />} />,
+        path: "/",
+        element: <WithoutFooter />,
+        children: [
+          {
+            path: "/login",
+            element: <LoginPage />,
+          },
+          {
+            path: "/change-password",
+            element: <PrivateRoute Component={<ChangePasswordPage />} />,
+          },
+          {
+            path: "/change-department",
+            element: <PrivateRoute Component={<ChangeDepartmentPage />} />,
+          },
+          {
+            path: "/course/:courseId",
+            element: <PrivateRoute Component={<CoursePage />} />,
+          },
+          {
+            path: "/course/:courseId/hour/:hourId",
+            element: <PrivateRoute Component={<CoursePlayPage />} />,
+          },
+        ],
       },
     ],
   },

@@ -5,7 +5,7 @@ import { user } from "../../api/index";
 import styles from "./index.module.scss";
 import { useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Footer, TabBarFooter, Empty } from "../../components";
+import { Footer, Empty } from "../../components";
 import { CoursesModel } from "./compenents/courses-model";
 import { isEmptyObject } from "../../utils/index";
 
@@ -321,7 +321,6 @@ const IndexPage = () => {
           </>
         )}
       </div>
-      <TabBarFooter></TabBarFooter>
     </div>
   );
 };
