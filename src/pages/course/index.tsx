@@ -4,7 +4,7 @@ import styles from "./index.module.scss";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import backIcon from "../../assets/images/commen/icon-back-n.png";
 import { course as vod } from "../../api/index";
-import { isEmptyObject, isWechat } from "../../utils/index";
+import { isEmptyObject, isWechat, isIOS } from "../../utils/index";
 import { Empty } from "../../components";
 import { HourCompenent } from "./compenents/hour";
 
@@ -126,7 +126,18 @@ const CoursePage = () => {
         document.body.removeChild(input);
         window.open(res.data.download_url);
       } else {
-        window.open(res.data.download_url);
+        if (isIOS()) {
+          Toast.show("请点击右上角···浏览器打开下载");
+          var input = document.createElement("input");
+          input.value = res.data.download_url;
+          document.body.appendChild(input);
+          input.select();
+          document.execCommand("Copy");
+          document.body.removeChild(input);
+          window.open(res.data.download_url);
+        } else {
+          window.open(res.data.download_url);
+        }
       }
     });
   };

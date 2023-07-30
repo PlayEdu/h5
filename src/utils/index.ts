@@ -85,3 +85,8 @@ export function isWechat() {
   let ua = window.navigator.userAgent.toLowerCase();
   return /micromessenger/.test(ua);
 }
+
+export function isIOS() {
+  var u = navigator.userAgent;
+  return !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+}
