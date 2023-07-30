@@ -118,15 +118,14 @@ const CoursePage = () => {
   const downLoadFile = (cid: number, id: number) => {
     vod.downloadAttachment(cid, id).then((res: any) => {
       if (isWechat()) {
-        const input = document.createElement("input");
+        Toast.show("请点击右上角···浏览器打开下载");
+        var input = document.createElement("input");
+        input.value = res.data.download_url;
         document.body.appendChild(input);
-        input.setAttribute("value", res.data.download_url);
         input.select();
-        if (document.execCommand("copy")) {
-          document.execCommand("copy");
-          Toast.show("请点击右上角···浏览器打开下载");
-        }
+        document.execCommand("Copy");
         document.body.removeChild(input);
+        window.open(res.data.download_url);
       } else {
         window.open(res.data.download_url);
       }
