@@ -247,7 +247,9 @@ const CoursePage = () => {
                     />
                     <span>课件</span>
                   </div>
-                  <span className={styles["title"]}>{item.title}</span>
+                  <span className={styles["title"]}>
+                    {item.title}（{item.type}）
+                  </span>
                 </div>
                 <div
                   className={styles["download"]}
