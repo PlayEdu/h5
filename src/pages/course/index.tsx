@@ -154,8 +154,9 @@ const CoursePage = () => {
         </div>
       </div>
       <div className={styles["other-content"]}>
-        <div className={styles["tabs"]}>
+        <div className="course-tab-box">
           <Tabs
+            activeLineMode="fixed"
             activeKey={String(tabKey)}
             onChange={(key: any) => {
               setTabKey(Number(key));
@@ -166,7 +167,7 @@ const CoursePage = () => {
               "--active-title-color": "rgba(0,0,0,0.88)",
               "--active-line-border-radius": "2px",
               "--title-font-size": "16px",
-          
+              "--content-padding":"18px"
             }}
           >
             {items.map((item) => (
