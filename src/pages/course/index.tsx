@@ -49,6 +49,7 @@ const CoursePage = () => {
   const [tabKey, setTabKey] = useState(Number(result.get("tab") || 1));
   const [attachments, setAttachments] = useState<attachModal[]>([]);
   const [items, setItems] = useState<tabModal[]>([]);
+  const [downLoadTemplateURL, setDownLoadTemplateURL] = useState("");
 
   useEffect(() => {
     getDetail();
@@ -105,19 +106,12 @@ const CoursePage = () => {
     navigate(`/course/${cid}/hour/${id}`);
   };
 
-  const isAndroid = () => {
-    const u = navigator.userAgent;
-
-    if (u.indexOf("Android") > -1 || u.indexOf("Linux") > -1) {
-      return true;
-    }
-
-    return false;
-  };
-
   const downLoadFile = (cid: number, id: number) => {
     vod.downloadAttachment(cid, id).then((res: any) => {
       if (isWechat()) {
+        if (isIOS()) {
+          Toast.show("请点击右上角···浏览器打开下载");
+        }
         var input = document.createElement("input");
         input.value = res.data.download_url;
         document.body.appendChild(input);
@@ -127,14 +121,11 @@ const CoursePage = () => {
         window.open(res.data.download_url);
       } else {
         if (isIOS()) {
-          Toast.show("请点击右上角···浏览器打开下载");
-          var input = document.createElement("input");
-          input.value = res.data.download_url;
-          document.body.appendChild(input);
-          input.select();
-          document.execCommand("Copy");
-          document.body.removeChild(input);
-          window.open(res.data.download_url);
+          setDownLoadTemplateURL(res.data.download_url);
+          setTimeout(() => {
+            let $do: any = document.querySelector("#downLoadExcel");
+            $do.click();
+          }, 500);
         } else {
           window.open(res.data.download_url);
         }
@@ -144,6 +135,12 @@ const CoursePage = () => {
 
   return (
     <div className="main-body">
+      <a
+        style={{ display: "none" }}
+        id="downLoadExcel"
+        href={downLoadTemplateURL}
+        download={true}
+      ></a>
       <div className="main-header" style={{ backgroundColor: "#FF4D4F" }}>
         <Image
           className="back-icon"
