@@ -118,7 +118,6 @@ const CoursePage = () => {
   const downLoadFile = (cid: number, id: number) => {
     vod.downloadAttachment(cid, id).then((res: any) => {
       if (isWechat()) {
-        Toast.show("请点击右上角···浏览器打开下载");
         var input = document.createElement("input");
         input.value = res.data.download_url;
         document.body.appendChild(input);
