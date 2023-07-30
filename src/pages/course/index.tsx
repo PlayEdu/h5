@@ -124,7 +124,7 @@ const CoursePage = () => {
         input.select();
         if (document.execCommand("copy")) {
           document.execCommand("copy");
-          Toast.show("下载链接已复制，请在浏览器中粘贴下载");
+          Toast.show("请点击右上角···浏览器打开下载");
         }
         document.body.removeChild(input);
       } else {
