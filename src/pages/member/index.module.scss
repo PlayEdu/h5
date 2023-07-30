@@ -157,10 +157,15 @@
 
 .dialog-body {
   position: fixed;
-  bottom: 0px;
+  bottom: 53px;
   left: 20px;
   right: 20px;
-  height: 253px;
+  min-height: 253px;
+  // box-sizing: border-box;
+  // padding-bottom: calc(
+  //   53px + constant(safe-area-inset-bottom)
+  // ); /* 兼容iOS 11.0 - 11.2 */
+  // padding-bottom: calc(53px + env(safe-area-inset-bottom)); /* 兼容iOS 11.2+ */
   .dialog-box {
     width: 100%;
     height: 162px;
