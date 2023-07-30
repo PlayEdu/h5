@@ -274,7 +274,7 @@ const CoursePage = () => {
                     <span>课件</span>
                   </div>
                   <div className={styles["title"]}>
-                    {item.title}（{item.type}）
+                    {item.title}.{item.ext}
                   </div>
                 </div>
                 <div
