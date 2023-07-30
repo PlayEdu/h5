@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Image, ProgressCircle } from "antd-mobile";
+import { Image, ProgressCircle, Tabs } from "antd-mobile";
 import styles from "./index.module.scss";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import backIcon from "../../assets/images/commen/icon-back-n.png";
@@ -155,22 +155,24 @@ const CoursePage = () => {
       </div>
       <div className={styles["other-content"]}>
         <div className={styles["tabs"]}>
-          {items.map((item: any) => (
-            <div
-              key={item.key}
-              className={
-                item.key === tabKey
-                  ? styles["tab-active-item"]
-                  : styles["tab-item"]
-              }
-              onClick={() => {
-                onChange(item.key);
-              }}
-            >
-              <div className={styles["tit"]}>{item.label}</div>
-              {item.key === tabKey && <i className={styles["act-line"]}></i>}
-            </div>
-          ))}
+          <Tabs
+            activeKey={String(tabKey)}
+            onChange={(key: any) => {
+              setTabKey(Number(key));
+            }}
+            style={{
+              "--fixed-active-line-width": "20px",
+              "--active-line-height": "3px",
+              "--active-title-color": "rgba(0,0,0,0.88)",
+              "--active-line-border-radius": "2px",
+              "--title-font-size": "16px",
+          
+            }}
+          >
+            {items.map((item) => (
+              <Tabs.Tab title={item.label} key={item.key} />
+            ))}
+          </Tabs>
         </div>
         {tabKey === 1 && (
           <>
