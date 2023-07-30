@@ -4,7 +4,7 @@ import styles from "./index.module.scss";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import backIcon from "../../assets/images/commen/icon-back-n.png";
 import { course as vod } from "../../api/index";
-import { isEmptyObject } from "../../utils/index";
+import { isEmptyObject, isWechat } from "../../utils/index";
 import { Empty } from "../../components";
 import { HourCompenent } from "./compenents/hour";
 
@@ -117,13 +117,19 @@ const CoursePage = () => {
 
   const downLoadFile = (cid: number, id: number) => {
     vod.downloadAttachment(cid, id).then((res: any) => {
-      var input = document.createElement("input");
-      input.value = res.data.download_url;
-      document.body.appendChild(input);
-      input.select();
-      document.execCommand("Copy");
-      document.body.removeChild(input);
-      Toast.show("下载链接已复制，请在浏览器中粘贴下载");
+      if (isWechat()) {
+        const input = document.createElement("input");
+        document.body.appendChild(input);
+        input.setAttribute("value", res.data.download_url);
+        input.select();
+        if (document.execCommand("copy")) {
+          document.execCommand("copy");
+          Toast.show("下载链接已复制，请在浏览器中粘贴下载");
+        }
+        document.body.removeChild(input);
+      } else {
+        window.open(res.data.download_url);
+      }
     });
   };
 
