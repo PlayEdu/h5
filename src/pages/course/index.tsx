@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Image, ProgressCircle, Tabs } from "antd-mobile";
+import { Image, ProgressCircle, Tabs, Toast } from "antd-mobile";
 import styles from "./index.module.scss";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import backIcon from "../../assets/images/commen/icon-back-n.png";
@@ -105,14 +105,25 @@ const CoursePage = () => {
     navigate(`/course/${cid}/hour/${id}`);
   };
 
-  const onChange = (key: number) => {
-    setTabKey(key);
-    // navigate("/course/" + courseId + "?tab=" + key);
+  const isAndroid = () => {
+    const u = navigator.userAgent;
+
+    if (u.indexOf("Android") > -1 || u.indexOf("Linux") > -1) {
+      return true;
+    }
+
+    return false;
   };
 
   const downLoadFile = (cid: number, id: number) => {
     vod.downloadAttachment(cid, id).then((res: any) => {
-      window.open(res.data.download_url);
+      var input = document.createElement("input");
+      input.value = res.data.download_url;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand("Copy");
+      document.body.removeChild(input);
+      Toast.show("下载链接已复制，请在浏览器中粘贴下载");
     });
   };
 
@@ -167,7 +178,7 @@ const CoursePage = () => {
               "--active-title-color": "rgba(0,0,0,0.88)",
               "--active-line-border-radius": "2px",
               "--title-font-size": "16px",
-              "--content-padding":"18px"
+              "--content-padding": "18px",
             }}
           >
             {items.map((item) => (
