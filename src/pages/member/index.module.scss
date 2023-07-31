@@ -1,5 +1,5 @@
 .main-body {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
@@ -7,7 +7,6 @@
   background-image: url("../../assets/images/login/bg.png");
   background-repeat: no-repeat;
   background-size: 100%;
-  z-index: 120;
   .support-box {
     position: fixed;
     top: 87%;
