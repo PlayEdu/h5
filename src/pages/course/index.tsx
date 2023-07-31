@@ -145,7 +145,15 @@ const CoursePage = () => {
         <Image
           className="back-icon"
           src={backIcon}
-          onClick={() => navigate(-1)}
+          onClick={() => {
+            if (window.history.length <= 1) {
+              // 将页面跳转到首页
+              navigate("/");
+            } else {
+              // 返回到前一个页面
+              navigate(-1);
+            }
+          }}
         />
       </div>
       <div className={styles["top-content"]}>
