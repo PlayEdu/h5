@@ -1,17 +1,29 @@
 import { lazy } from "react";
 import { RouteObject } from "react-router-dom";
 import { system, user } from "../api";
-
 import { getToken } from "../utils";
+// 页面加载
 import { InitPage } from "../pages/init";
-import IndexPage from "../pages/index/index";
 import LoginPage from "../pages/login";
-import MemberPage from "../pages/member/index";
-import ChangePasswordPage from "../pages/change-password/index";
-import ChangeDepartmentPage from "../pages/change-department/index";
-import StudyPage from "../pages/study/index";
-import CoursePage from "../pages/course/index";
-import CoursePlayPage from "../pages/course/video";
+import WithFooter from "../pages/layouts/with-footer";
+import WithoutFooter from "../pages/layouts/without-footer";
+
+//用户中心页面
+const MemberPage = lazy(() => import("../pages/member/index"));
+//主页
+const IndexPage = lazy(() => import("../pages/index/index"));
+//修改密码页面
+const ChangePasswordPage = lazy(() => import("../pages/change-password/index"));
+//修改部门页面
+const ChangeDepartmentPage = lazy(
+  () => import("../pages/change-department/index")
+);
+//学习页面
+const StudyPage = lazy(() => import("../pages/study/index"));
+//课程页面
+const CoursePage = lazy(() => import("../pages/course/index"));
+const CoursePlayPage = lazy(() => import("../pages/course/video"));
+
 import PrivateRoute from "../components/private-route";
 
 let RootPage: any = null;
@@ -53,35 +65,47 @@ const routes: RouteObject[] = [
     children: [
       {
         path: "/",
-        element: <PrivateRoute Component={<IndexPage />} />,
+        element: <WithFooter />,
+        children: [
+          {
+            path: "/",
+            element: <PrivateRoute Component={<IndexPage />} />,
+          },
+          {
+            path: "/member",
+            element: <PrivateRoute Component={<MemberPage />} />,
+          },
+          {
+            path: "/study",
+            element: <PrivateRoute Component={<StudyPage />} />,
+          },
+        ],
       },
       {
-        path: "/login",
-        element: <LoginPage />,
-      },
-      {
-        path: "/member",
-        element: <PrivateRoute Component={<MemberPage />} />,
-      },
-      {
-        path: "/change-password",
-        element: <PrivateRoute Component={<ChangePasswordPage />} />,
-      },
-      {
-        path: "/study",
-        element: <PrivateRoute Component={<StudyPage />} />,
-      },
-      {
-        path: "/change-department",
-        element: <PrivateRoute Component={<ChangeDepartmentPage />} />,
-      },
-      {
-        path: "/course/:courseId",
-        element: <PrivateRoute Component={<CoursePage />} />,
-      },
-      {
-        path: "/course/:courseId/hour/:hourId",
-        element: <PrivateRoute Component={<CoursePlayPage />} />,
+        path: "/",
+        element: <WithoutFooter />,
+        children: [
+          {
+            path: "/login",
+            element: <LoginPage />,
+          },
+          {
+            path: "/change-password",
+            element: <PrivateRoute Component={<ChangePasswordPage />} />,
+          },
+          {
+            path: "/change-department",
+            element: <PrivateRoute Component={<ChangeDepartmentPage />} />,
+          },
+          {
+            path: "/course/:courseId",
+            element: <PrivateRoute Component={<CoursePage />} />,
+          },
+          {
+            path: "/course/:courseId/hour/:hourId",
+            element: <PrivateRoute Component={<CoursePlayPage />} />,
+          },
+        ],
       },
     ],
   },

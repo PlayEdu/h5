@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Skeleton } from "antd-mobile";
 import styles from "./index.module.scss";
 import { course } from "../../api/index";
-import { TabBarFooter, Empty } from "../../components";
+import { Empty } from "../../components";
 import { CoursesModel } from "./compenents/courses-model";
 import moment from "moment";
 
@@ -143,7 +143,6 @@ const StudyPage = () => {
           </>
         )}
       </div>
-      <TabBarFooter></TabBarFooter>
     </div>
   );
 };

@@ -5,7 +5,7 @@ import { user } from "../../api/index";
 import styles from "./index.module.scss";
 import { useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Footer, TabBarFooter, Empty } from "../../components";
+import { Footer, Empty } from "../../components";
 import { CoursesModel } from "./compenents/courses-model";
 import { isEmptyObject } from "../../utils/index";
 
@@ -163,16 +163,13 @@ const IndexPage = () => {
     return (
       <>
         {data.map((item: any) => (
-          <div
-            key={item.key}
-            className={
-              item.key === categoryId
-                ? styles["active-child-item"]
-                : styles["child-item"]
-            }
-          >
+          <div key={item.key} className={styles["child-item"]}>
             <div
-              className={styles["category-child-tit"]}
+              className={
+                item.key === categoryId
+                  ? styles["act-category-child-tit"]
+                  : styles["category-child-tit"]
+              }
               onClick={() => {
                 setCategoryId(item.key);
                 setCategoryText(item.title);
@@ -324,7 +321,6 @@ const IndexPage = () => {
           </>
         )}
       </div>
-      <TabBarFooter></TabBarFooter>
     </div>
   );
 };

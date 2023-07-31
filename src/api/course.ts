@@ -31,3 +31,8 @@ export function playPing(courseId: number, hourId: number) {
 export function latestLearn() {
   return client.get(`/api/v1/user/latest-learn`, {});
 }
+
+//下载课件
+export function downloadAttachment(courseId: number, id: number) {
+  return client.get(`/api/v1/course/${courseId}/attach/${id}/download`, {});
+}

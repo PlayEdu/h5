@@ -155,3 +155,15 @@ code {
 .dplayer-mobile-play {
   opacity: 1 !important;
 }
+
+.course-tab-box {
+  width: 100%;
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-bottom: 20px;
+  .adm-tabs-tab-wrapper {
+    padding: 0 36px 0 0;
+  }
+}

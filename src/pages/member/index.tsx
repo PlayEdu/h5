@@ -7,7 +7,6 @@ import { loginAction, logoutAction } from "../../store/user/loginUserSlice";
 import { ImageUploadItem } from "antd-mobile/es/components/image-uploader";
 import styles from "./index.module.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { TabBarFooter } from "../../components";
 import moreIcon from "../../assets/images/commen/icon-more.png";
 
 const MemberPage = () => {
@@ -317,7 +316,6 @@ const MemberPage = () => {
           </div>
         </div>
       </Mask>
-      <TabBarFooter></TabBarFooter>
     </div>
   );
 };
