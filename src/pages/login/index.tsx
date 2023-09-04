@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button, Toast, Input, Image } from "antd-mobile";
 import styles from "./index.module.scss";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login, system, user } from "../../api/index";
 import { setToken } from "../../utils/index";
@@ -19,6 +19,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [bodyHeight, setBodyHeight] = useState(0);
+  const systemConfig = useSelector((state: any) => state.systemConfig.value);
 
   useEffect(() => {
     document.title = "登录";
@@ -29,7 +30,7 @@ const LoginPage = () => {
   const loginSubmit = async (e: any) => {
     if (!email) {
       Toast.show({
-        content: "请输入学员邮箱账号",
+        content: "请输入邮箱或uid",
       });
       return;
     }
@@ -47,17 +48,32 @@ const LoginPage = () => {
       return;
     }
     setLoading(true);
-    try {
-      let res: any = await login.login(email, password);
-      setToken(res.data.token); //将token写入本地
-      await getSystemConfig(); //获取系统配置并写入store
-      await getUser(); //获取登录用户的信息并写入store
-      setLoading(false);
-      navigate("/member", { replace: true });
-    } catch (e) {
-      console.error("错误信息", e);
-      setLoading(false);
+    if (systemConfig["ldap-enabled"] === "1") {
+      try {
+        let res: any = await login.loginLdap(email, password);
+        setToken(res.data.token); //将token写入本地
+        await getSystemConfig(); //获取系统配置并写入store
+        await getUser(); //获取登录用户的信息并写入store
+        setLoading(false);
+        navigate("/member", { replace: true });
+      } catch (e) {
+        console.error("错误信息", e);
+        setLoading(false);
+      }
+    }else{
+      try {
+        let res: any = await login.login(email, password);
+        setToken(res.data.token); //将token写入本地
+        await getSystemConfig(); //获取系统配置并写入store
+        await getUser(); //获取登录用户的信息并写入store
+        setLoading(false);
+        navigate("/member", { replace: true });
+      } catch (e) {
+        console.error("错误信息", e);
+        setLoading(false);
+      }
     }
+    
   };
 
   const getUser = async () => {
@@ -70,6 +86,7 @@ const LoginPage = () => {
     if (configRes.data) {
       let config: SystemConfigStoreInterface = {
         //系统配置
+        "ldap-enabled": configRes.data["ldap-enabled"],
         systemApiUrl: configRes.data["system-api-url"],
         systemH5Url: configRes.data["system-h5-url"],
         systemLogo: configRes.data["system-logo"],
@@ -110,7 +127,7 @@ const LoginPage = () => {
         <div className={styles["input-box"]}>
           <Input
             className={styles["input-item"]}
-            placeholder="请输入学员邮箱账号"
+            placeholder="请输入邮箱或uid"
             value={email}
             onChange={(val) => {
               setEmail(val);
