@@ -86,7 +86,7 @@ const LoginPage = () => {
     if (configRes.data) {
       let config: SystemConfigStoreInterface = {
         //系统配置
-        "ldap-enabled": configRes.configData["ldap-enabled"],
+        "ldap-enabled": configRes.data["ldap-enabled"],
         systemApiUrl: configRes.data["system-api-url"],
         systemH5Url: configRes.data["system-h5-url"],
         systemLogo: configRes.data["system-logo"],
