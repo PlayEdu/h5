@@ -30,7 +30,7 @@ const LoginPage = () => {
   const loginSubmit = async (e: any) => {
     if (!email) {
       Toast.show({
-        content: "请输入邮箱或uid",
+        content: "请输入邮箱或UID",
       });
       return;
     }
@@ -127,7 +127,7 @@ const LoginPage = () => {
         <div className={styles["input-box"]}>
           <Input
             className={styles["input-item"]}
-            placeholder="请输入邮箱或uid"
+            placeholder="请输入邮箱或UID"
             value={email}
             onChange={(val) => {
               setEmail(val);
