@@ -24,6 +24,7 @@ export const InitPage = (props: Props) => {
     if (props.configData) {
       let config: SystemConfigStoreInterface = {
         //系统配置
+        "ldap-enabled": props.configData["ldap-enabled"],
         systemApiUrl: props.configData["system-api-url"],
         systemH5Url: props.configData["system-h5-url"],
         systemLogo: props.configData["system-logo"],
