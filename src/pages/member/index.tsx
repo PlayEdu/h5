@@ -22,10 +22,8 @@ const MemberPage = () => {
       url: "",
     },
   ]);
-  const [learnTodayDay, setLearnTodayDay] = useState(0);
   const [learnTodayHour, setLearnTodayHour] = useState(0);
   const [learnTodayMin, setLearnTodayMin] = useState(0);
-  const [learnTotalDay, setLearnTotalDay] = useState(0);
   const [learnTotalHour, setLearnTotalHour] = useState(0);
   const [learnTotalMin, setLearnTotalMin] = useState(0);
   const user = useSelector((state: any) => state.loginUser.value.user);
@@ -60,19 +58,17 @@ const MemberPage = () => {
       setStats(res.data.stats);
       let todayData = studyTimeFormat(res.data.stats.today_learn_duration);
       if (todayData) {
-        setLearnTodayDay(todayData[0]);
-        setLearnTodayHour(todayData[1]);
-        setLearnTodayMin(todayData[2]);
-        if (todayData[2] === 0 && todayData[3] > 0) {
+        setLearnTodayHour(todayData[0]);
+        setLearnTodayMin(todayData[1]);
+        if (todayData[1] === 0 && todayData[2] > 0) {
           setLearnTodayMin(1);
         }
       }
       let totalData = studyTimeFormat(res.data.stats.learn_duration);
       if (totalData) {
-        setLearnTotalDay(totalData[0]);
-        setLearnTotalHour(totalData[1]);
-        setLearnTotalMin(totalData[2]);
-        if (totalData[2] === 0 && totalData[3] > 0) {
+        setLearnTotalHour(totalData[0]);
+        setLearnTotalMin(totalData[1]);
+        if (totalData[1] === 0 && totalData[2] > 0) {
           setLearnTodayMin(1);
         }
       }
@@ -191,11 +187,6 @@ const MemberPage = () => {
         <div className={styles["stats-content"]}>
           <div className={styles["stat-item"]}>
             <span className={styles["time"]}>
-              {learnTodayDay > 0 && (
-                <>
-                  <strong>{learnTodayDay} </strong>天
-                </>
-              )}
               <strong> {learnTodayHour} </strong>时
               <strong> {learnTodayMin} </strong>分
             </span>
@@ -203,11 +194,6 @@ const MemberPage = () => {
           </div>
           <div className={styles["stat-item"]}>
             <span className={styles["time"]}>
-              {learnTotalDay > 0 && (
-                <>
-                  <strong>{learnTotalDay} </strong>天
-                </>
-              )}
               <strong> {learnTotalHour} </strong>时
               <strong> {learnTotalMin} </strong>分
             </span>

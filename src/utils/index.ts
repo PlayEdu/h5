@@ -54,7 +54,6 @@ export function changeAppUrl(str: string) {
 export function studyTimeFormat(dateStr: number) {
   var d = moment.duration(dateStr / 1000, "seconds");
   let value = [];
-  value.push(Math.floor(d.asDays()));
   value.push(d.hours());
   value.push(d.minutes());
   value.push(d.seconds());
