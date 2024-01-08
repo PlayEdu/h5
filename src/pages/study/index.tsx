@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Skeleton } from "antd-mobile";
+import { PullToRefresh, Skeleton } from "antd-mobile";
+import { sleep } from "antd-mobile/es/utils/sleep";
 import styles from "./index.module.scss";
 import { course } from "../../api/index";
 import { Empty } from "../../components";
@@ -17,14 +18,11 @@ const StudyPage = () => {
   }, []);
 
   useEffect(() => {
+    setLoading(true);
     getCourses();
   }, []);
 
   const getCourses = () => {
-    if (loading) {
-      return;
-    }
-    setLoading(true);
     course
       .latestLearn()
       .then((res: any) => {
@@ -61,87 +59,97 @@ const StudyPage = () => {
   return (
     <div className="main-body">
       <div className={styles["title"]}>最近学习</div>
-      <div className={styles["list-box"]}>
-        {loading &&
-          Array.from({ length: 2 }).map((_, i) => (
-            <div className={styles["item"]} key={i}>
-              <Skeleton
-                animated
-                style={{
-                  width: 100,
-                  height: 75,
-                  borderRadius: 8,
-                  marginRight: 15,
-                }}
-              />
-              <div className={styles["item-info"]}>
-                <Skeleton animated style={{ width: "100%", height: 21 }} />
-                <Skeleton animated style={{ width: "100%", height: 24 }} />
-              </div>
-            </div>
-          ))}
-        {!loading &&
-          courses.length === 0 &&
-          todayCourses.length === 0 &&
-          yesterdayCourses.length === 0 && <Empty></Empty>}
-        {!loading && (
-          <>
-            {todayCourses.length > 0 && (
-              <>
-                <div className={styles["label"]}>今日</div>
-                {todayCourses.map((item: any, index: number) => (
-                  <div key={index} style={{ width: "100%" }}>
-                    {item.course && (
-                      <CoursesModel
-                        id={item.course.id}
-                        title={item.course.title}
-                        thumb={item.course.thumb}
-                        isRequired={item.course.is_required}
-                        record={item.record}
-                      ></CoursesModel>
-                    )}
+      <div className="float-left" style={{ position: "relative" }}>
+        <PullToRefresh
+          onRefresh={async () => {
+            setLoading(true);
+            await sleep(700);
+            getCourses();
+          }}
+        >
+          <div className={styles["list-box"]}>
+            {loading &&
+              Array.from({ length: 2 }).map((_, i) => (
+                <div className={styles["item"]} key={i}>
+                  <Skeleton
+                    animated
+                    style={{
+                      width: 100,
+                      height: 75,
+                      borderRadius: 8,
+                      marginRight: 15,
+                    }}
+                  />
+                  <div className={styles["item-info"]}>
+                    <Skeleton animated style={{ width: "100%", height: 21 }} />
+                    <Skeleton animated style={{ width: "100%", height: 24 }} />
                   </div>
-                ))}
+                </div>
+              ))}
+            {!loading &&
+              courses.length === 0 &&
+              todayCourses.length === 0 &&
+              yesterdayCourses.length === 0 && <Empty></Empty>}
+            {!loading && (
+              <>
+                {todayCourses.length > 0 && (
+                  <>
+                    <div className={styles["label"]}>今日</div>
+                    {todayCourses.map((item: any, index: number) => (
+                      <div key={index} style={{ width: "100%" }}>
+                        {item.course && (
+                          <CoursesModel
+                            id={item.course.id}
+                            title={item.course.title}
+                            thumb={item.course.thumb}
+                            isRequired={item.course.is_required}
+                            record={item.record}
+                          ></CoursesModel>
+                        )}
+                      </div>
+                    ))}
+                  </>
+                )}
+                {yesterdayCourses.length > 0 && (
+                  <>
+                    <div className={styles["label"]}>昨日</div>
+                    {yesterdayCourses.map((item: any, index: number) => (
+                      <div key={index} style={{ width: "100%" }}>
+                        {item.course && (
+                          <CoursesModel
+                            id={item.course.id}
+                            title={item.course.title}
+                            thumb={item.course.thumb}
+                            isRequired={item.course.is_required}
+                            record={item.record}
+                          ></CoursesModel>
+                        )}
+                      </div>
+                    ))}
+                  </>
+                )}
+                {courses.length > 0 && (
+                  <>
+                    <div className={styles["label"]}>更早</div>
+                    {courses.map((item: any, index: number) => (
+                      <div key={index} style={{ width: "100%" }}>
+                        {item.course && (
+                          <CoursesModel
+                            id={item.course.id}
+                            title={item.course.title}
+                            thumb={item.course.thumb}
+                            isRequired={item.course.is_required}
+                            record={item.record}
+                          ></CoursesModel>
+                        )}
+                      </div>
+                    ))}
+                  </>
+                )}
               </>
             )}
-            {yesterdayCourses.length > 0 && (
-              <>
-                <div className={styles["label"]}>昨日</div>
-                {yesterdayCourses.map((item: any, index: number) => (
-                  <div key={index} style={{ width: "100%" }}>
-                    {item.course && (
-                      <CoursesModel
-                        id={item.course.id}
-                        title={item.course.title}
-                        thumb={item.course.thumb}
-                        isRequired={item.course.is_required}
-                        record={item.record}
-                      ></CoursesModel>
-                    )}
-                  </div>
-                ))}
-              </>
-            )}
-            {courses.length > 0 && (
-              <>
-                <div className={styles["label"]}>更早</div>
-                {courses.map((item: any, index: number) => (
-                  <div key={index} style={{ width: "100%" }}>
-                    {item.course && (
-                      <CoursesModel
-                        id={item.course.id}
-                        title={item.course.title}
-                        thumb={item.course.thumb}
-                        isRequired={item.course.is_required}
-                        record={item.record}
-                      ></CoursesModel>
-                    )}
-                  </div>
-                ))}
-              </>
-            )}
-          </>
-        )}
+          </div>
+        </PullToRefresh>
       </div>
     </div>
   );

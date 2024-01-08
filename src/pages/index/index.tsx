@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { Dropdown, Skeleton, Tabs } from "antd-mobile";
+import { Dropdown, PullToRefresh, Skeleton, Tabs } from "antd-mobile";
+import { sleep } from "antd-mobile/es/utils/sleep";
 import { DropdownRef } from "antd-mobile/es/components/dropdown";
 import { user } from "../../api/index";
 import styles from "./index.module.scss";
@@ -71,14 +72,15 @@ const IndexPage = () => {
   }, []);
 
   useEffect(() => {
+    setLoading(true);
     if (currentDepId === 0) {
+      setLoading(false);
       return;
     }
     getData();
   }, [currentDepId, categoryId]);
 
   const getData = () => {
-    setLoading(true);
     user.courses(currentDepId, categoryId).then((res: any) => {
       const records = res.data.learn_course_records;
       setLearnCourseRecords(records);
@@ -265,61 +267,74 @@ const IndexPage = () => {
           </Dropdown.Item>
         </Dropdown>
       </div>
-      <div className={styles["list-box"]}>
-        {loading &&
-          Array.from({ length: 2 }).map((_, i) => (
-            <div
-              style={{
-                width: "100%",
-                height: 75,
-                display: "flex",
-                alignItems: "center",
-                marginBottom: 30,
-                marginTop: 30,
-              }}
-              key={i}
-            >
-              <Skeleton
-                animated
-                style={{
-                  width: 100,
-                  height: 75,
-                  borderRadius: 8,
-                  marginRight: 15,
-                }}
-              />
-              <div
-                style={{
-                  flex: 1,
-                  height: 75,
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Skeleton animated style={{ width: "100%", height: 21 }} />
-                <Skeleton animated style={{ width: "100%", height: 24 }} />
-              </div>
-            </div>
-          ))}
-        {!loading && coursesList.length === 0 && <Empty></Empty>}
-        {!loading && coursesList.length > 0 && (
-          <>
-            {coursesList.map((item: any) => (
-              <div className={styles["item"]} key={item.id}>
-                <CoursesModel
-                  id={item.id}
-                  title={item.title}
-                  thumb={item.thumb}
-                  isRequired={item.is_required}
-                  record={learnCourseRecords[item.id]}
-                  hourCount={learnCourseHourCount[item.id]}
-                ></CoursesModel>
-              </div>
-            ))}
-            <Footer></Footer>
-          </>
-        )}
+      <div
+        className="float-left"
+        style={{ position: "relative", paddingTop: 96 }}
+      >
+        <PullToRefresh
+          onRefresh={async () => {
+            setLoading(true);
+            await sleep(700);
+            getData();
+          }}
+        >
+          <div className={styles["list-box"]}>
+            {loading &&
+              Array.from({ length: 2 }).map((_, i) => (
+                <div
+                  style={{
+                    width: "100%",
+                    height: 75,
+                    display: "flex",
+                    alignItems: "center",
+                    marginBottom: 30,
+                    marginTop: 30,
+                  }}
+                  key={i}
+                >
+                  <Skeleton
+                    animated
+                    style={{
+                      width: 100,
+                      height: 75,
+                      borderRadius: 8,
+                      marginRight: 15,
+                    }}
+                  />
+                  <div
+                    style={{
+                      flex: 1,
+                      height: 75,
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Skeleton animated style={{ width: "100%", height: 21 }} />
+                    <Skeleton animated style={{ width: "100%", height: 24 }} />
+                  </div>
+                </div>
+              ))}
+            {!loading && coursesList.length === 0 && <Empty></Empty>}
+            {!loading && coursesList.length > 0 && (
+              <>
+                {coursesList.map((item: any) => (
+                  <div className={styles["item"]} key={item.id}>
+                    <CoursesModel
+                      id={item.id}
+                      title={item.title}
+                      thumb={item.thumb}
+                      isRequired={item.is_required}
+                      record={learnCourseRecords[item.id]}
+                      hourCount={learnCourseHourCount[item.id]}
+                    ></CoursesModel>
+                  </div>
+                ))}
+                <Footer></Footer>
+              </>
+            )}
+          </div>{" "}
+        </PullToRefresh>
       </div>
     </div>
   );
