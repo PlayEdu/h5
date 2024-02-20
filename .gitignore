@@ -32,3 +32,5 @@ yarn.lock
 
 deploy-test.sh
 deploy-demo.sh
+
+pnpm-lock.yaml
